@@ -1,0 +1,9 @@
+
+html, body, header, .view {
+  height: 100vh;
+}
+.overlay-image {
+  background: url("/images/background-overlay-view.png") no-repeat center center;
+  background-size: cover;
+}
+
