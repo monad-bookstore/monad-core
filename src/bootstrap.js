@@ -9,8 +9,6 @@ require('popper.js/dist/umd/popper.min')
 require('bootstrap//dist//js/bootstrap.min')
 // <!-- MDB core JavaScript -->
 require('mdbootstrap/js/mdb.min')
-// <!-- Font Awesome -->
-import 'font-awesome/css/font-awesome.min.css'
 // <!-- Bootstrap core CSS -->
 import 'bootstrap/dist/css/bootstrap.min.css'
 // <!-- Material Design Bootstrap -->

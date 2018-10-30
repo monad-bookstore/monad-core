@@ -1,0 +1,49 @@
+
+.double-nav {
+  padding-left: 17rem;
+}
+
+
+.cascading-admin-card[data-v-384683c2] {
+  margin: 20px 0;
+}
+.cascading-admin-card .admin-up[data-v-384683c2] {
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: -20px;
+}
+.cascading-admin-card .admin-up .fas[data-v-384683c2] {
+  box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2), 0 2px 13px 0 rgba(0, 0, 0, 0.19);
+  padding: 1.7rem;
+  font-size: 2rem;
+  color: #fff;
+  text-align: left;
+  margin-right: 1rem;
+  border-radius: 3px;
+}
+.cascading-admin-card .admin-up .data[data-v-384683c2] {
+  float: right;
+  margin-top: 2rem;
+  text-align: right;
+}
+.card .card-body .card-text[data-v-384683c2] {
+  font-size: .9rem;
+  font-weight: 400;
+}
+
+
+.administrative-title {
+  height: 80px;
+  border-bottom: 1px solid rgba(153, 153, 153, 0.3);
+}
+
+
+.flexible-content[data-v-15d5e34b] {
+  transition: padding-left 0.3s;
+  padding-left: 240px;
+}
+main[data-v-15d5e34b] {
+  height: 100%;
+  background-color: #eeeeee;
+}
+

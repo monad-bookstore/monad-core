@@ -1,10 +1,10 @@
 <template>
     <section>
         <!--Navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark rgba-black-strong fixed-top scrolling-navbar">
             <div class="container">
                 <!-- Navbar brand -->
-                <a class="navbar-brand" href="#">Monad</a>
+                <a class="navbar-brand" href="#">MONAD</a>
 
                 <!-- Collapse button -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse_navbar_element"
@@ -19,14 +19,31 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="#">Pagrindinis</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Parduotuvė</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Mano krepšelis</a>
+                        </li>
                     </ul>
                     <!-- Links -->
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav" v-if="$store.getters.isAuthenticated === false">
                         <li class="nav-item">
                             <a class="nav-link">Prisijungimas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link">Registracija</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav" v-else>
+                        <li class="nav-item">
+                            <a class="nav-link">Kliento meniu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">Nustatymai</a>
+                        </li>
+                        <li v-if="$store.getters.isAdministrator === true" class="nav-item">
+                            <a class="nav-link" href="/administrative">Administravimas</a>
                         </li>
                     </ul>
                 </div>

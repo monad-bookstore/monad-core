@@ -1,7 +1,76 @@
+// Side navigation bar component styling.
+@import "./components/SidenavComponent.scss";
+ 
 section {
     display: contents;
 }
 
-body, html, .view {
-    height: 100%;
+html, body, header, .view {
+    height: 100vh;
+}
+
+.background-image {
+    background: url("/images/background-overlay-view.png") no-repeat center center;
+    background-size: cover;
+}
+
+.btn-floating {
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+    box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+    width: 47px;
+    height: 47px;
+    position: relative;
+    z-index: 1;
+    vertical-align: middle;
+    display: inline-block;
+    overflow: hidden;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    margin: 10px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+
+    i {
+        display: inline-block;
+        width: inherit;
+        text-align: center;
+        color: #fff;
+    }
+
+    &.btn-lg {
+        width: 61.1px;
+        height: 61.1px;
+
+        i {
+            font-size: 1.625rem;
+            line-height: 61.1px;
+        }
+    }
+
+    &.btn-sm {
+
+        width: 36.15385px;
+        height: 36.15385px;
+        
+        i {
+            font-size: .96154rem;
+            line-height: 36.15385px;
+        }
+    }
+
+    &.btn-outline {
+        background-color: transparent;
+        border: 1px solid black;
+    }
+}
+
+.card a {
+    .hyperlink {
+        position: absolute;
+        top: 0; left: 0;
+        height: 100%; width: 100%;
+    }
 }

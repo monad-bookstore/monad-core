@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
     resolve: {
@@ -50,7 +51,13 @@ module.exports = {
                 test: /\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    "css-loader", "sass-loader"
+                    "css-loader", 
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            includePaths: [path.resolve(__dirname, '/scss/')]
+                        }
+                    },
                 ]
             },
             {
@@ -93,6 +100,11 @@ module.exports = {
             filename: "/css/[name].css",
             chunkFilename: "/css/[id].css"
         }),
+        new CopyWebpackPlugin([{
+            from: 'node_modules/mdbootstrap/js', to: path.resolve(__dirname, "../Application/wwwroot", "lib", "mdbootstrap", "js"),
+        }, {
+            from: 'node_modules/mdbootstrap/css', to: path.resolve(__dirname, "../Application/wwwroot", "lib", "mdbootstrap", "css"),
+        }]),
         new webpack.NoEmitOnErrorsPlugin(),
         new VueLoaderPlugin()
     ]),

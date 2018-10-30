@@ -1,10 +1,10 @@
 const path = require('path')
 const merge = require('webpack-merge')
 const entries = require('webpack-entries')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const configuration = require('./webpack.common')
 
 function entryList() {
+
     let list = entries("./src/views/*.js", true)
     for (let entry in list) {
         let directory = path.basename(path.dirname(list[entry]))
@@ -20,7 +20,9 @@ module.exports = merge(configuration, {
     mode: 'development',
     devtool: "#cheap-module-eval-source-map",
     entry: {
-        ...entryList()
+        ...entryList(),
+        // TODO: Rasti alternatyvą šitam hakui.
+        "css/styles.css": "assets/scss/layout.scss",
     },
     output: {
         path: path.resolve(__dirname, "../Application/wwwroot/"),
