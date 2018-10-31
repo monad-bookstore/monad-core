@@ -1,6 +1,6 @@
 <template>
     <section>
-        <div class="text-center white-text mx-5 wow fadeIn raleway-font">
+        <div class="text-center white-text mx-5 wow fadeIn font raleway light">
             <h1 class="mb-2">
                MONAD.LT
             </h1>
@@ -9,7 +9,7 @@
                     Geriausia lietuviškų knygų ir publikacijų parduotuvė internete.
                 </strong>
             </p>
-            <a @click="$router.push({ name: 'store' })" class="btn btn-outline-white btn-lg waves-effect waves-light">
+            <a @click="$router.push({ name: 'store' })" class="btn btn-outline-white btn-md waves-effect waves-light">
                 Peržiūrėti knygas
             </a>
         </div>
@@ -22,11 +22,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-
-    .raleway-font {
-        font-family: 'Raleway Light';
-    }
-
-</style>

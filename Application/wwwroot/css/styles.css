@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .side-nav {
   position: fixed;
   width: 15rem;
@@ -114,11 +115,54 @@
   margin-bottom: -99999px;
   padding-bottom: 99999px; }
 
-@font-face {
-  font-family: 'Raleway Light';
-  font-style: normal;
-  font-weight: 300;
-  src: url("/fonts/Raleway-v4020-Light.otf") format("otf"); }
+.font.raleway {
+  font-family: 'Raleway'; }
+
+.font.light {
+  font-weight: 300; }
+
+.font.regular {
+  font-weight: 400; }
+
+.font.bold {
+  font-weight: 700; }
+
+.navbar-monad {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030; }
+
+.navbar-monad button {
+  padding: .25rem .75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  outline: 0;
+  border-width: 0; }
+
+.navbar-monad .navbar-brand,
+.navbar-monad .navbar-brand:focus,
+.navbar-monad .navbar-brand:hover {
+  color: #fff; }
+
+.navbar-monad .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://ww…p='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  cursor: pointer; }
+
+/* change the link color */
+.navbar-monad .navbar-nav .nav-link {
+  color: white; }
+
+/* change the color of active or hovered links */
+.navbar-monad .nav-item.active .nav-link,
+.navbar-monad .nav-item:hover .nav-link {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white; }
 
 section {
   display: contents; }
@@ -129,6 +173,9 @@ html, body, header, .view {
 
 .view, .mask {
   overflow-y: auto !important; }
+
+.container.adjusted {
+  padding-top: 56px; }
 
 .background-image {
   background: url("/images/background-overlay-view.png") no-repeat center center;
@@ -191,43 +238,64 @@ html, body, header, .view {
 .rgba-black-view {
   color: white;
   background-color: rgba(0, 0, 0, 0.7); }
-  .rgba-black-view input[type=date]:focus:not([readonly]),
-  .rgba-black-view input[type=datetime-local]:focus:not([readonly]),
-  .rgba-black-view input[type=email]:focus:not([readonly]),
-  .rgba-black-view input[type=number]:focus:not([readonly]),
-  .rgba-black-view input[type=password]:focus:not([readonly]),
-  .rgba-black-view input[type=search-md]:focus:not([readonly]),
-  .rgba-black-view input[type=search]:focus:not([readonly]),
-  .rgba-black-view input[type=tel]:focus:not([readonly]),
-  .rgba-black-view input[type=text]:focus:not([readonly]),
-  .rgba-black-view input[type=time]:focus:not([readonly]),
-  .rgba-black-view input[type=url]:focus:not([readonly]),
-  .rgba-black-view textarea.md-textarea:focus:not([readonly]) {
+  .rgba-black-view hr {
+    border-top: 1px solid rgba(153, 153, 153, 0.3); }
+
+.card.authorization {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 0 0 4px #000;
+  box-shadow: 0 0 4px #000;
+  border-radius: 0px;
+  text-align: center; }
+  .card.authorization .card-body, .card.authorization .card-header {
+    background-color: transparent; }
+  .card.authorization .card-header {
+    font-family: "Raleway";
+    font-weight: 300; }
+  .card.authorization input[type=checkbox]:checked + label::before {
+    background-color: black !important; }
+  .card.authorization .custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: none !important; }
+  .card.authorization input[type=date]:focus:not([readonly]),
+  .card.authorization input[type=datetime-local]:focus:not([readonly]),
+  .card.authorization input[type=email]:focus:not([readonly]),
+  .card.authorization input[type=number]:focus:not([readonly]),
+  .card.authorization input[type=password]:focus:not([readonly]),
+  .card.authorization input[type=search-md]:focus:not([readonly]),
+  .card.authorization input[type=search]:focus:not([readonly]),
+  .card.authorization input[type=tel]:focus:not([readonly]),
+  .card.authorization input[type=text]:focus:not([readonly]),
+  .card.authorization input[type=time]:focus:not([readonly]),
+  .card.authorization input[type=url]:focus:not([readonly]),
+  .card.authorization textarea.md-textarea:focus:not([readonly]) {
     border-bottom: 1px solid white !important;
     box-shadow: 0 1px 0 0 white !important;
     color: white !important; }
-    .rgba-black-view input[type=date]:focus:not([readonly]) + label,
-    .rgba-black-view input[type=datetime-local]:focus:not([readonly]) + label,
-    .rgba-black-view input[type=email]:focus:not([readonly]) + label,
-    .rgba-black-view input[type=number]:focus:not([readonly]) + label,
-    .rgba-black-view input[type=password]:focus:not([readonly]) + label,
-    .rgba-black-view input[type=search-md]:focus:not([readonly]) + label,
-    .rgba-black-view input[type=search]:focus:not([readonly]) + label,
-    .rgba-black-view input[type=tel]:focus:not([readonly]) + label,
-    .rgba-black-view input[type=text]:focus:not([readonly]) + label,
-    .rgba-black-view input[type=time]:focus:not([readonly]) + label,
-    .rgba-black-view input[type=url]:focus:not([readonly]) + label,
-    .rgba-black-view textarea.md-textarea:focus:not([readonly]) + label {
+    .card.authorization input[type=date]:focus:not([readonly]) + label,
+    .card.authorization input[type=datetime-local]:focus:not([readonly]) + label,
+    .card.authorization input[type=email]:focus:not([readonly]) + label,
+    .card.authorization input[type=number]:focus:not([readonly]) + label,
+    .card.authorization input[type=password]:focus:not([readonly]) + label,
+    .card.authorization input[type=search-md]:focus:not([readonly]) + label,
+    .card.authorization input[type=search]:focus:not([readonly]) + label,
+    .card.authorization input[type=tel]:focus:not([readonly]) + label,
+    .card.authorization input[type=text]:focus:not([readonly]) + label,
+    .card.authorization input[type=time]:focus:not([readonly]) + label,
+    .card.authorization input[type=url]:focus:not([readonly]) + label,
+    .card.authorization textarea.md-textarea:focus:not([readonly]) + label {
       color: white !important; }
-  .rgba-black-view .md-form input[type=password],
-  .rgba-black-view .md-form input[type=email],
-  .rgba-black-view .md-form input[type=text] {
+  .card.authorization .md-form input[type=password],
+  .card.authorization .md-form input[type=email],
+  .card.authorization .md-form input[type=text] {
     border-bottom: 1px solid white !important;
     color: white !important; }
-    .rgba-black-view .md-form input[type=password] + label,
-    .rgba-black-view .md-form input[type=email] + label,
-    .rgba-black-view .md-form input[type=text] + label {
+    .card.authorization .md-form input[type=password] + label,
+    .card.authorization .md-form input[type=email] + label,
+    .card.authorization .md-form input[type=text] + label {
       color: white !important; }
-  .rgba-black-view hr {
+  .card.authorization hr {
     border-top: 1px solid rgba(153, 153, 153, 0.3); }
+  .card.authorization a {
+    color: inherit; }
 
