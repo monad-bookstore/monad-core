@@ -55,9 +55,70 @@ namespace Application
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    "signin",
+                    "signin",
+                    new { controller = "Home", action = "Index" }
+                );
+
+                routes.MapRoute(
+                    "registration",
+                    "registration",
+                    new { controller = "Home", action = "Index" }
+                );
+
+                routes.MapRoute(
+                    "orders",
+                    "orders",
+                    new { controller = "Home", action = "Index" }
+                );
+
+                routes.MapRoute(
+                    "cart",
+                    "cart",
+                    new { controller = "Home", action = "Index" }
+                );
+
+                routes.MapRoute(
+                    "settings",
+                    "settings",
+                    new { controller = "Home", action = "Index" }
+                );
+
+                routes.MapRoute(
+                    "store",
+                    "store",
+                    new { controller = "Home", action = "Index" }
+                );
+
+                routes.MapRoute(
+                    "contact",
+                    "contact",
+                    new { controller = "Home", action = "Index" }
+                );
+
+                routes.MapRoute(
+                    "cases",
+                    "cases",
+                    new { controller = "Home", action = "Index" }
+                );
+
+                routes.MapRoute(
+                    "case",
+                    "case",
+                    new { controller = "Home", action = "Index" }
+                );
+
+                routes.MapRoute(
+                    "overview",
+                    "overview",
+                    new { controller = "Home", action = "Index" }
+                );
+
+                routes.MapRoute(
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");
 
+       
                 routes.MapRoute("administrative", "administrative/{*pages}",
                     new
                     {

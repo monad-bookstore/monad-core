@@ -48,6 +48,7 @@
     "webpack-dev-server": "^3.1.9",
     "webpack-entries": "^1.0.0",
     "webpack-glob-entries": "^1.0.1",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.1.4",
+    "wow.js": "^1.2.2"
   }
 }

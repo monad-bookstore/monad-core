@@ -38,6 +38,13 @@
   transform: translateX(0);
   position: fixed; }
 
+.side-nav.relative {
+  left: 0;
+  -webkit-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+  position: relative; }
+
 .side-nav {
   list-style-type: none; }
 
@@ -107,6 +114,12 @@
   margin-bottom: -99999px;
   padding-bottom: 99999px; }
 
+@font-face {
+  font-family: 'Raleway Light';
+  font-style: normal;
+  font-weight: 300;
+  src: url("/fonts/Raleway-v4020-Light.otf") format("otf"); }
+
 section {
   display: contents; }
 
@@ -162,4 +175,57 @@ html, body, header, .view {
   left: 0;
   height: 100%;
   width: 100%; }
+
+.btn-outline-white {
+  border: 2px solid white !important;
+  background-color: transparent !important;
+  color: white !important; }
+
+.base-view {
+  padding-top: 64px; }
+
+input[type=date]:focus:not([readonly]),
+input[type=datetime-local]:focus:not([readonly]),
+input[type=email]:focus:not([readonly]),
+input[type=number]:focus:not([readonly]),
+input[type=password]:focus:not([readonly]),
+input[type=search-md]:focus:not([readonly]),
+input[type=search]:focus:not([readonly]),
+input[type=tel]:focus:not([readonly]),
+input[type=text]:focus:not([readonly]),
+input[type=time]:focus:not([readonly]),
+input[type=url]:focus:not([readonly]),
+textarea.md-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid white !important;
+  box-shadow: 0 1px 0 0 white !important;
+  color: white !important; }
+  input[type=date]:focus:not([readonly]) + label,
+  input[type=datetime-local]:focus:not([readonly]) + label,
+  input[type=email]:focus:not([readonly]) + label,
+  input[type=number]:focus:not([readonly]) + label,
+  input[type=password]:focus:not([readonly]) + label,
+  input[type=search-md]:focus:not([readonly]) + label,
+  input[type=search]:focus:not([readonly]) + label,
+  input[type=tel]:focus:not([readonly]) + label,
+  input[type=text]:focus:not([readonly]) + label,
+  input[type=time]:focus:not([readonly]) + label,
+  input[type=url]:focus:not([readonly]) + label,
+  textarea.md-textarea:focus:not([readonly]) + label {
+    color: white !important; }
+
+.md-form input[type=password],
+.md-form input[type=email],
+.md-form input[type=text] {
+  border-bottom: 1px solid white !important;
+  color: white !important; }
+  .md-form input[type=password] + label,
+  .md-form input[type=email] + label,
+  .md-form input[type=text] + label {
+    color: white !important; }
+
+.rgba-black-view {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7); }
+  .rgba-black-view hr {
+    border-top: 1px solid rgba(153, 153, 153, 0.3); }
 

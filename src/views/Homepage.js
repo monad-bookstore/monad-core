@@ -15,8 +15,8 @@ Vue.prototype.$store = require('~/store').default
 /* ------------------------------ ------------------------------ */
 // VueRouter configuration.
 /* ------------------------------ ------------------------------ */
-
-
+import router from './Homepage/routing';
+Vue.use(VueRouter)
 /* ------------------------------ ------------------------------ */
 // Usable components.
 /* ------------------------------ ------------------------------ */
@@ -26,5 +26,6 @@ Vue.component('application', require('./Homepage/Index.vue').default);
 /* ------------------------------ ------------------------------ */
 
 new Vue({
-    el: '#vue-application'
+    el: '#vue-application',
+    router
 })

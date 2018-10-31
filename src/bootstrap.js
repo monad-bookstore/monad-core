@@ -13,3 +13,5 @@ require('mdbootstrap/js/mdb.min')
 import 'bootstrap/dist/css/bootstrap.min.css'
 // <!-- Material Design Bootstrap -->
 import 'mdbootstrap/css/mdb.min.css'
+// <!-- WOW.js -->
+window.WOW = require('wow.js')
