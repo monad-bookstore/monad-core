@@ -250,7 +250,7 @@ input[type=date]:focus:not([readonly]) + label[data-v-adf5438a],
 .chatbox-rgba[data-v-2b348a4b] {
   background-color: rgba(255, 255, 255, 0.1);
 }
-.container-fluid.adjusted[data-v-2b348a4b] {
+.container.adjusted[data-v-2b348a4b] {
   padding-top: 64px;
 }
 .flex-fill[data-v-2b348a4b] {

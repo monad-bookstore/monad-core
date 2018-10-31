@@ -14,7 +14,12 @@ section {
 }
 
 html, body, header, .view {
-    height: 100vh;
+    height: 100%;
+    overflow: auto;
+}
+
+.view, .mask {
+    overflow-y: auto !important;
 }
 
 .background-image {
@@ -93,7 +98,9 @@ html, body, header, .view {
     padding-top: 64px;
 }
 
-input[type=date]:focus:not([readonly]), 
+.rgba-black-view {
+
+    input[type=date]:focus:not([readonly]), 
     input[type=datetime-local]:focus:not([readonly]), 
     input[type=email]:focus:not([readonly]), 
     input[type=number]:focus:not([readonly]),
@@ -112,7 +119,6 @@ input[type=date]:focus:not([readonly]),
             color: white !important;
         }
     }
-
     .md-form input[type=password],
     .md-form input[type=email],
     .md-form input[type=text] {
@@ -123,10 +129,11 @@ input[type=date]:focus:not([readonly]),
         }
     }
 
-    .rgba-black-view {
-        color: white;
-        background-color: rgba(0, 0, 0, 0.7);
-        hr {
-            border-top: 1px solid rgba(153,153,153,.3);
-        }
+
+
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    hr {
+        border-top: 1px solid rgba(153,153,153,.3);
     }
+}

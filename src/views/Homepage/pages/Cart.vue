@@ -1,7 +1,7 @@
 <template>
 <section>
-    <div class="container-fluid adjusted h-100 d-flex wow fadeIn">
-        <div class="row flex-fill m-4 rgba-black-view">
+    <div class="container-fluid adjusted  d-flex wow fadeIn m-auto">
+        <div class="row flex-fill h-100 m-4 rgba-black-view">
             <div class="col p-0 white-text py-3">
                 <div class="row h-100 m-3">
                     <div class="col-7">

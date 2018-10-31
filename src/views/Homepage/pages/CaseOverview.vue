@@ -1,6 +1,6 @@
 <template>
 <section>
-    <div class="container adjusted d-flex wow fadeIn">
+    <div class="container adjusted wow fadeIn d-flex m-auto">
         <div class="row flex-fill m-4 rgba-black-view">
             <div class="col p-0 white-text py-3">
                 <div class="row h-100 m-3">
@@ -77,7 +77,7 @@ export default {
         background-color: rgba(255, 255, 255, .1)
     }
 
-    .container-fluid {
+    .container {
         &.adjusted {
             padding-top: 64px;
         }

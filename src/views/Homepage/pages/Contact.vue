@@ -1,6 +1,6 @@
 <template>
-    <div class="container adjusted d-flex wow fadeIn">
-        <div class="row flex-fill m-4 rgba-black-view">
+    <div class="container adjusted wow fadeIn m-auto">
+        <div class="row flex-fill h-100 m-4 rgba-black-view">
             <div class="col p-0 white-text py-3">
                 <div class="row m-3">
                     <div class="col-12">

@@ -1,7 +1,7 @@
 <template>
 <section>
-    <div class="container-fluid adjusted h-100 d-flex wow fadeIn">
-        <div class="row flex-fill m-4 rgba-black-view">
+    <div class="container-fluid adjusted m-auto wow fadeIn">
+        <div class="row flex-fill h-100 m-4 rgba-black-view">
             <div class="col-auto p-0">
                 <store-sidenav/>
             </div>
