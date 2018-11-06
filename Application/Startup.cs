@@ -73,6 +73,12 @@ namespace Application
                 );
 
                 routes.MapRoute(
+                    "order-overview",
+                    "order-overview",
+                    new { controller = "Home", action = "Index" }
+                );
+
+                routes.MapRoute(
                     "cart",
                     "cart",
                     new { controller = "Home", action = "Index" }

@@ -45,9 +45,6 @@ export default {
             address_creator: false
         }
     },
-    mounted() {
-        new WOW().init();
-    },
     methods: {
         address_creator_toggle: function() {
             this.address_creator = !this.address_creator;

@@ -23,7 +23,7 @@ export default {
         }
     },
     mounted() {
-        new WOW().init();
+        document.title = 'Knygos apžalvga - Balta drobulė - MONAD.LT'
     },
     methods: {
         address_creator_toggle: function() {

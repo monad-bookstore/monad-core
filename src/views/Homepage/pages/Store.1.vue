@@ -65,9 +65,6 @@
 </template>
 <script>
 export default {
-    mounted() {
-        new WOW().init();
-    },
     components: {
         "store-sidenav": require('../components/navigation/StoreSidenavComponent.vue').default,
         "book-example": require('../components/misc/StoreGridBookComponent.vue').default,

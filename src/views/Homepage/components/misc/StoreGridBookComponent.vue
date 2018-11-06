@@ -1,6 +1,6 @@
 <template>
 <section>
-    <div class="row mt-5" @click="$router.push({ name: 'overview' })">
+    <div class="row" @click="$router.push({ name: 'overview' })">
         <div class="col-12 d-flex justify-content-center">
             <img src="/images/book-cover-preview.png" height="200px" width="132px"/>
         </div>

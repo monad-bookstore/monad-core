@@ -8,16 +8,18 @@
             <td>{{ quantity }}</td>
             <td>{{ created_at_formatted }}</td>
             <td>
-                <button v-if="control_allows_remove" class="btn btn-outline-danger btn-sm m-0">Pašalinti</button>
-                <button v-if="control_allows_edit" class="btn btn-outline-success btn-sm m-0">Redaguoti</button>
+                <button @click="displayAlert()" v-if="control_allows_remove" class="btn btn-outline-danger btn-sm m-0">Pašalinti</button>
+                <button data-toggle="modal" data-target="#edit_product" v-if="control_allows_edit" class="btn btn-outline-success btn-sm m-0">Redaguoti</button>
             </td>
         </tr>
     </section>
 </template>
 <script>
 import moment from 'moment'
+import confirmationAlert from 'mixins/confirmationAlert.js'
 
 export default {
+    mixins: [confirmationAlert],
     computed: {
         created_at_formatted: function() {
             return moment().format('YYYY-MM-DD HH:mm')

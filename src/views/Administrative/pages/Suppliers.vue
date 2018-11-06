@@ -27,6 +27,20 @@
                 </button>
             </template>
         </generic-modal>
+        <!-- Supplier modification modal window -->
+        <generic-modal title="Tiekėjo redagavimas" identifier="edit_supplier">
+            <template slot="body">
+                <supplier-form/>
+            </template>
+            <template slot="footer">
+                <button type="button" class="btn btn-elegant" data-dismiss="modal">
+                    Patvirtinti
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    Atšaukti
+                </button>
+            </template>
+        </generic-modal>
     </section>
 </template>
 <script>

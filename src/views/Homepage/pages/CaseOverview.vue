@@ -10,13 +10,13 @@
                         <div class="row">
                             <div class="col-12 mt-3">
                                 <div class="chatbox-rgba p-2">
-                                    <small>Jonas Jonaitis (2018-10-10 17:43)</small><br/>
+                                    <small>Jonas Jonaitis (2018-10-10 17:43) [<a @click="displayAlert()">trinti</a>] </small><br/>
                                     <p class="m-0 ml-2">Sveiki, savo užsakymo negaunu jau 17 dienų, ką daryt?</p>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
                                  <div class="chatbox-rgba p-2">
-                                    <small>Prekių kokybės kontrolės darbuotojas (2018-10-31 11:03)</small><br/>
+                                    <small>Prekių kokybės kontrolės darbuotojas (2018-10-31 11:03) [<a @click="displayAlert()">trinti</a>]</small><br/>
                                     <p class="m-0 ml-2">Bandymas.</p>
                                 </div>
                             </div>
@@ -44,15 +44,15 @@
 </section>    
 </template>
 <script>
+import confirmationAlert from 'mixins/confirmationAlert.js'
+
 export default {
     data() {
         return {
             address_creator: false
         }
     },
-    mounted() {
-        new WOW().init();
-    },
+    mixins: [confirmationAlert],
     methods: {
         address_creator_toggle: function() {
             this.address_creator = !this.address_creator;

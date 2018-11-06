@@ -19,8 +19,8 @@
                         </div>
                         <!-- Repeat password -->
                         <div class="md-form">
-                            <input type="password" id="materialLoginFormPassword" class="form-control">
-                            <label for="materialLoginFormPassword">Pakartoti slaptažodį</label>
+                            <input type="password" id="materialLoginFormPasswordRepeat" class="form-control">
+                            <label for="materialLoginFormPasswordRepeat">Pakartoti slaptažodį</label>
                         </div>
                         <!-- Name -->
                         <div class="md-form">
@@ -42,10 +42,3 @@
         </div>
     </div>
 </template>
-<script>
-export default {
-    mounted() {
-        new WOW().init();
-    },
-}
-</script>

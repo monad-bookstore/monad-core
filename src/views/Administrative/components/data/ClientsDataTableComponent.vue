@@ -28,10 +28,14 @@
             <td>jonas@jonaitis.lt</td>
             <td>Klientas</td>
             <td>2018-10-30</td>
-            <td><span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Panaikinti</button></span></td>
+            <td><span class="table-remove"><button @click="displayAlert()" type="button" class="btn btn-danger btn-rounded btn-sm my-0">Panaikinti</button></span></td>
             <td>
-                <span class="table-remove"><button type="button" class="btn btn-success btn-rounded btn-sm my-0">Redaguoti</button></span>
-                <span class="table-remove"><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">Užsakymai</button></span>
+                <span class="table-remove">
+                    <button data-toggle="modal" data-target="#edit_client" type="button" class="btn btn-success btn-rounded btn-sm my-0">Redaguoti</button>
+                </span>
+                <span class="table-remove">
+                    <button data-toggle="modal" data-target="#client_orders" type="button" class="btn btn-primary btn-rounded btn-sm my-0">Užsakymai</button>
+                </span>
             </td>
         </tr>
         <tr>
@@ -40,10 +44,18 @@
             <td>admin@monad.lt</td>
             <td>Administratorius</td>
             <td>2018-10-30</td>
-            <td><span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Panaikinti</button></span></td>
             <td>
-                <span class="table-remove"><button type="button" class="btn btn-success btn-rounded btn-sm my-0">Redaguoti</button></span>
-                <span class="table-remove"><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">Užsakymai</button></span>
+                <span class="table-remove">
+                    <button @click="displayAlert()" type="button" class="btn btn-danger btn-rounded btn-sm my-0">Panaikinti</button>
+                </span>
+            </td>
+            <td>
+                <span class="table-remove">
+                    <button data-toggle="modal" data-target="#edit_client" type="button" class="btn btn-success btn-rounded btn-sm my-0">Redaguoti</button>
+                </span>
+                <span class="table-remove">
+                    <button data-toggle="modal" data-target="#client_orders" type="button" class="btn btn-primary btn-rounded btn-sm my-0">Užsakymai</button>
+                </span>
             </td>
         </tr>
     </tbody>
@@ -51,7 +63,10 @@
 </template>
 
 <script>
+import confirmationAlert from 'mixins/confirmationAlert.js'
+
 export default {
+    mixins: [confirmationAlert],
     mounted() {
         $(document).ready(function () {
             $('#dtBasicExample').DataTable({

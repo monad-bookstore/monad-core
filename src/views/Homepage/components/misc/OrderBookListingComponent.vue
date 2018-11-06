@@ -1,8 +1,8 @@
 <template>
 <section>
     <div class="row mt-2">
-        <div class="col-1 d-flex justify-content-start">
-            <img src="/images/book-cover-preview.png" height="200px" width="132px"/>
+        <div class="col-auto d-flex justify-content-start">
+            <img @click="$router.push({name: 'order-overview'})" src="/images/book-cover-preview.png" height="200px" width="132px"/>
         </div>
             <div class="d-flex  ml-3 flex-grow-1 flex-column align-items-start justify-content-start">
                 <div class="mb-auto">

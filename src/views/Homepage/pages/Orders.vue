@@ -8,10 +8,10 @@
                         <h3 class="text-uppercase">Užsakymų istorija</h3>
                         <hr/>
                         <div class="row mt-3 d-flex flex-wrap flex-row align-items-start justify-content-start">
-                            <div class="col-12">
+                            <div  class="col-12">
                                 <book-example/>
                             </div>
-                            <div class="col-12 mt-5">
+                            <div  class="col-12 mt-5">
                                 <book-example/>
                             </div>
                         </div>
@@ -28,9 +28,6 @@ export default {
         return {
             address_creator: false
         }
-    },
-    mounted() {
-        new WOW().init();
     },
     methods: {
         address_creator_toggle: function() {

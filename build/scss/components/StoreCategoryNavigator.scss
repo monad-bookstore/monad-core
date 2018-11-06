@@ -1,0 +1,85 @@
+// Bootstrap
+@import "bootstrap/scss/_functions.scss";
+@import "bootstrap/scss/_variables.scss";
+@import "bootstrap/scss/_mixins.scss";
+
+.store-navigator {
+    width: 15rem;
+    height: 100%;
+    left: 0; top: 0;
+    margin: 0;
+    z-index: 1040;
+    overflow: hidden;
+    will-change: transform;
+    backface-visibility: hidden;
+    padding: 0;
+    background-color: transparent;
+    border-right: 1px solid rgba($color: white, $alpha: 0.05);
+    text-align: left;
+    @include list-unstyled();
+
+    &.overflow-y {
+        overflow-y: auto;
+    }
+
+    &.relative {
+        left: 0;
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+        position: relative;
+    }
+
+    &.absolute {
+        position: absolute;
+    }
+
+    .collapsible {
+        margin: 1rem 0 0 1rem;
+        padding: 0;
+
+        .fa {
+            font-size: .8rem;
+            margin-right: 13px;
+        }
+
+        ul {
+            padding: 0;
+            @include list-unstyled();
+        }
+
+        li {
+            .collapsible-header {
+                color: white;
+                @include transition(all 0.3s linear);
+            }
+
+            a {
+                padding-left: 15px;
+            }
+        }
+    }
+
+    a {
+        display: block;
+        color: white;
+        font-weight: 300;
+        font-size: .8rem;
+        height: 36px;
+        line-height: 36px;
+
+        .fa {
+            font-size: .8rem;
+            margin-right: 13px;
+        }
+    }
+
+    ul {
+        @include list-unstyled();
+        padding-left: 0;
+    }
+
+    ul.list-unstyled li {
+        padding-left: 2rem;
+    }
+}

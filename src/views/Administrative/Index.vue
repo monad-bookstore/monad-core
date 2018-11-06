@@ -18,7 +18,21 @@ export default {
     }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+
+    
+    // Side navigation bar component styling.
+    @import "assets/scss/components/SidenavComponent.scss";   
+    
+    section {
+        display: contents;
+    }
+
+    html, body, header, .view {
+        height: 100%;
+        overflow: auto;
+    }
+
 
     .flexible-content {
         transition: padding-left 0.3s;

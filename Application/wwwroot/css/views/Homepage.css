@@ -1,74 +1,78 @@
 
-.login-form[data-v-d818bfb8] {
-  color: white;
+.store-navigator[data-v-a50d63ee] {
+  width: 15rem;
+  height: 100%;
+  left: 0;
+  top: 0;
+  margin: 0;
+  z-index: 1040;
+  overflow: hidden;
+  will-change: transform;
+  backface-visibility: hidden;
+  padding: 0;
+  background-color: transparent;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: left;
+  padding-left: 0;
+  list-style: none;
 }
-.login-form a[data-v-d818bfb8] {
-    color: inherit;
+.store-navigator.overflow-y[data-v-a50d63ee] {
+    overflow-y: auto;
 }
-.login-form .card[data-v-d818bfb8] {
-    background-color: rgba(0, 0, 0, 0.7);
+.store-navigator.relative[data-v-a50d63ee] {
+    left: 0;
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+    position: relative;
+}
+.store-navigator.absolute[data-v-a50d63ee] {
+    position: absolute;
+}
+.store-navigator .collapsible[data-v-a50d63ee] {
+    margin: 1rem 0 0 1rem;
+    padding: 0;
+}
+.store-navigator .collapsible .fa[data-v-a50d63ee] {
+      font-size: .8rem;
+      margin-right: 13px;
+}
+.store-navigator .collapsible ul[data-v-a50d63ee] {
+      padding: 0;
+      padding-left: 0;
+      list-style: none;
+}
+.store-navigator .collapsible li .collapsible-header[data-v-a50d63ee] {
+      color: white;
+      transition: all 0.3s linear;
+}
+@media screen and (prefers-reduced-motion: reduce) {
+.store-navigator .collapsible li .collapsible-header[data-v-a50d63ee] {
+          transition: none;
+}
+}
+.store-navigator .collapsible li a[data-v-a50d63ee] {
+      padding-left: 15px;
+}
+.store-navigator a[data-v-a50d63ee] {
+    display: block;
+    color: white;
     font-weight: 300;
+    font-size: .8rem;
+    height: 36px;
+    line-height: 36px;
 }
-.login-form .card-body[data-v-d818bfb8], .login-form .card-header[data-v-d818bfb8] {
-    background-color: transparent;
+.store-navigator a .fa[data-v-a50d63ee] {
+      font-size: .8rem;
+      margin-right: 13px;
 }
-.login-form .card-header[data-v-d818bfb8] {
-    font-family: "Raleway Light";
+.store-navigator ul[data-v-a50d63ee] {
+    padding-left: 0;
+    list-style: none;
+    padding-left: 0;
 }
-.login-form input[type=checkbox]:checked + label[data-v-d818bfb8]::before {
-    background-color: black !important;
-}
-.login-form .custom-control-input:focus ~ .custom-control-label[data-v-d818bfb8]::before {
-    box-shadow: none !important;
-}
-input[type=date][data-v-d818bfb8]:focus:not([readonly]),
-input[type=datetime-local][data-v-d818bfb8]:focus:not([readonly]),
-input[type=email][data-v-d818bfb8]:focus:not([readonly]),
-input[type=number][data-v-d818bfb8]:focus:not([readonly]),
-input[type=password][data-v-d818bfb8]:focus:not([readonly]),
-input[type=search-md][data-v-d818bfb8]:focus:not([readonly]),
-input[type=search][data-v-d818bfb8]:focus:not([readonly]),
-input[type=tel][data-v-d818bfb8]:focus:not([readonly]),
-input[type=text][data-v-d818bfb8]:focus:not([readonly]),
-input[type=time][data-v-d818bfb8]:focus:not([readonly]),
-input[type=url][data-v-d818bfb8]:focus:not([readonly]),
-textarea.md-textarea[data-v-d818bfb8]:focus:not([readonly]) {
-  border-bottom: 1px solid white !important;
-  box-shadow: 0 1px 0 0 white !important;
-  color: white !important;
-}
-input[type=date]:focus:not([readonly]) + label[data-v-d818bfb8],
-  input[type=datetime-local]:focus:not([readonly]) + label[data-v-d818bfb8],
-  input[type=email]:focus:not([readonly]) + label[data-v-d818bfb8],
-  input[type=number]:focus:not([readonly]) + label[data-v-d818bfb8],
-  input[type=password]:focus:not([readonly]) + label[data-v-d818bfb8],
-  input[type=search-md]:focus:not([readonly]) + label[data-v-d818bfb8],
-  input[type=search]:focus:not([readonly]) + label[data-v-d818bfb8],
-  input[type=tel]:focus:not([readonly]) + label[data-v-d818bfb8],
-  input[type=text]:focus:not([readonly]) + label[data-v-d818bfb8],
-  input[type=time]:focus:not([readonly]) + label[data-v-d818bfb8],
-  input[type=url]:focus:not([readonly]) + label[data-v-d818bfb8],
-  textarea.md-textarea:focus:not([readonly]) + label[data-v-d818bfb8] {
-    color: white !important;
-}
-.md-form input[type=password][data-v-d818bfb8],
-.md-form input[type=email][data-v-d818bfb8] {
-  border-bottom: 1px solid white !important;
-  color: white !important;
-}
-.md-form input[type=password] + label[data-v-d818bfb8],
-  .md-form input[type=email] + label[data-v-d818bfb8] {
-    color: white !important;
-}
-
-
-.sidenav-title {
-  height: 80px;
-  border-bottom: 1px solid rgba(153, 153, 153, 0.3);
-}
-.side-nav {
-  background-color: transparent !important;
-  border-right: 1px solid rgba(153, 153, 153, 0.3);
+.store-navigator ul.list-unstyled li[data-v-a50d63ee] {
+    padding-left: 2rem;
 }
 
 
@@ -127,6 +131,35 @@ input[type=date]:focus:not([readonly]) + label[data-v-d818bfb8],
 }
 
 
+.book-title[data-v-5482c477] {
+  font-size: 14px;
+}
+.book-author[data-v-5482c477] {
+  font-size: 21px;
+}
+.book-description[data-v-5482c477] {
+  font-size: 13px;
+}
+.book-price[data-v-5482c477] {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+
+.rgba-black-view[data-v-5399b7d5] {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.rgba-black-view hr[data-v-5399b7d5] {
+    border-top: 1px solid rgba(153, 153, 153, 0.3);
+}
+.container-fluid.adjusted[data-v-5399b7d5] {
+  padding-top: 64px;
+}
+.flex-fill[data-v-5399b7d5] {
+  flex: 1 1 auto;
+}
+
+
 .book-title[data-v-6e8b0eae] {
   font-size: 12px;
 }
@@ -135,17 +168,17 @@ input[type=date]:focus:not([readonly]) + label[data-v-d818bfb8],
 }
 
 
-.rgba-black-view[data-v-39a7aecf] {
-  background-color: rgba(0, 0, 0, 0.7);
+.fas[data-v-4c4a1952] {
+  font-size: 1.25rem;
 }
-.rgba-black-view hr[data-v-39a7aecf] {
-    border-top: 1px solid rgba(153, 153, 153, 0.3);
-}
-.container-fluid.adjusted[data-v-39a7aecf] {
-  padding-top: 64px;
-}
-.flex-fill[data-v-39a7aecf] {
-  flex: 1 1 auto;
+
+
+.toggle-navigator[data-v-39a7aecf] {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin-top: 3rem;
+  margin-left: 3rem;
 }
 
 
@@ -222,4 +255,16 @@ input[type=date]:focus:not([readonly]) + label[data-v-d818bfb8],
   flex: 1 1 auto;
 }
 
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
 

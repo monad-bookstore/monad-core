@@ -17,6 +17,15 @@ Vue.prototype.$store = require('~/store').default
 /* ------------------------------ ------------------------------ */
 import router from './Homepage/routing';
 Vue.use(VueRouter)
+
+router.beforeEach((to, from, next) => {
+    if (!!to.meta.titled) {
+        document.title = to.meta.titled
+    }
+    next()
+})
+
+
 /* ------------------------------ ------------------------------ */
 // Usable components.
 /* ------------------------------ ------------------------------ */

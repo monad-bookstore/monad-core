@@ -27,9 +27,24 @@
                 </button>
             </template>
         </generic-modal>
+        <!-- Product modification modal window -->
+        <generic-modal title="Prekės redagavimas" identifier="edit_product">
+            <template slot="body">
+                <product-form/>
+            </template>
+            <template slot="footer">
+                <button type="button" class="btn btn-elegant" data-dismiss="modal">
+                    Patvirtinti
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    Atšaukti
+                </button>
+            </template>
+        </generic-modal>
     </section>
 </template>
 <script>
+
 export default {
     components: {
         "products-listing": require("../components/data/ProductsTableComponent.vue").default,

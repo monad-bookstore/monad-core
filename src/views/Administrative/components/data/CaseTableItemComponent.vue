@@ -6,7 +6,11 @@
             <td>{{ client }}</td>
             <td>{{ created_at_formatted }}</td>
             <td>
-                <span class="table-remove"><button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Peržiūrėti</button></span>
+                <span class="table-remove">
+                    <a target="_blank" href="/case">
+                        <button type="button" class="btn btn-primary btn-rounded btn-sm m-0">Peržiūrėti</button>
+                    </a>
+                </span>
             </td>
         </tr>
     </section>
