@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries")
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
@@ -81,6 +82,13 @@ module.exports = {
                     }
                 ]
             },
+            // {
+            //     test: /\.(png|jpg)$/,
+            //     loader: "url-loader",
+            //     options: {
+            //         limit: 8192
+            //     }
+            // },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/,
                 use: [
@@ -97,15 +105,16 @@ module.exports = {
         ]
     },
     plugins: ([
+        new FixStyleOnlyEntriesPlugin(),
         new MiniCssExtractPlugin({
             filename: "/css/[name].css",
             chunkFilename: "/css/[id].css"
         }),
-        new CopyWebpackPlugin([{
-            from: 'node_modules/mdbootstrap/js', to: path.resolve(__dirname, "../Application/wwwroot", "lib", "mdbootstrap", "js"),
-        }, {
-            from: 'node_modules/mdbootstrap/css', to: path.resolve(__dirname, "../Application/wwwroot", "lib", "mdbootstrap", "css"),
-        }]),
+        // new CopyWebpackPlugin([{
+        //     from: 'node_modules/mdbootstrap/js', to: path.resolve(__dirname, "../Application/wwwroot", "lib", "mdbootstrap", "js"),
+        // }, {
+        //     from: 'node_modules/mdbootstrap/css', to: path.resolve(__dirname, "../Application/wwwroot", "lib", "mdbootstrap", "css"),
+        // }]),
         new webpack.NoEmitOnErrorsPlugin(),
         new VueLoaderPlugin()
     ]),
