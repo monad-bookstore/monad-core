@@ -7,11 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class DatabaseContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
+
         }
     }
 }

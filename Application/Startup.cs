@@ -1,16 +1,22 @@
-﻿using Application.Controllers;
-using Application.Data;
+﻿using Application.Helpers;
+using Application.Models;
+using Application.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MySql.Data.EntityFrameworkCore;
-using MySql.Data.EntityFrameworkCore.Extensions;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Text;
+using AutoMapper;
 
 namespace Application
+
 {
     public class Startup
     {
@@ -24,25 +30,74 @@ namespace Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            /*services.AddDbContext<ApplicationDbContext>(options => 
-                options.UseM)*/
-
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddAutoMapper();
+            services.AddCors();
+            services.AddDbContext<BookstoreContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
-                
-            services.Configure<CookiePolicyOptions>(options =>
+            
+            services.Configure<IdentityOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                // Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+                options.Lockout.MaxFailedAccessAttempts = 7;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZąčęėįšųūžĄČĘĖĮŠŲŪŽ0123456789-_";
+                options.User.RequireUniqueEmail = true;
             });
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromHours(24);
 
+                options.LoginPath = "/signin";
+                options.AccessDeniedPath = "/signin";
+                options.SlidingExpiration = true;
+            });
+
+            IConfigurationSection settingSection = Configuration.GetSection("ApplicationSettings");
+            services.Configure<ApplicationSettings>(settingSection);
+
+            ApplicationSettings settings = settingSection.Get<ApplicationSettings>();
+            byte[] key = Encoding.ASCII.GetBytes(settings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+            
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<IClientService, ClientService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -50,92 +105,37 @@ namespace Application
                 app.UseExceptionHandler("/Home/Error");
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+
+            app.UseAuthentication();
+
+
+            logger.AddConsole(Configuration.GetSection("Logging"));
+            logger.AddDebug();
+
+           
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    "signin",
-                    "signin",
-                    new { controller = "Home", action = "Index" }
-                );
+                    name: "default", 
+                    template: "{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
-                    "registration",
-                    "registration",
-                    new { controller = "Home", action = "Index" }
-                );
+                    "administrative", 
+                    "administrative/{*pages}",
+                    new { controller = "Administrative", action = "Index" });
 
-                routes.MapRoute(
-                    "orders",
-                    "orders",
-                    new { controller = "Home", action = "Index" }
-                );
-
-                routes.MapRoute(
-                    "order-overview",
-                    "order-overview",
-                    new { controller = "Home", action = "Index" }
-                );
-
-                routes.MapRoute(
-                    "cart",
-                    "cart",
-                    new { controller = "Home", action = "Index" }
-                );
-
-                routes.MapRoute(
-                    "settings",
-                    "settings",
-                    new { controller = "Home", action = "Index" }
-                );
-
-                routes.MapRoute(
-                    "store",
-                    "store",
-                    new { controller = "Home", action = "Index" }
-                );
-
-                routes.MapRoute(
-                    "contact",
-                    "contact",
-                    new { controller = "Home", action = "Index" }
-                );
-
-                routes.MapRoute(
-                    "cases",
-                    "cases",
-                    new { controller = "Home", action = "Index" }
-                );
-
-                routes.MapRoute(
-                    "case",
-                    "case",
-                    new { controller = "Home", action = "Index" }
-                );
-
-                routes.MapRoute(
-                    "overview",
-                    "overview",
-                    new { controller = "Home", action = "Index" }
-                );
-
-                routes.MapRoute(
-                    "default",
-                    "{controller=Home}/{action=Index}/{id?}");
-
-       
-                routes.MapRoute("administrative", "administrative/{*pages}",
-                    new
-                    {
-                        controller = "Administrative",
-                        action = "Index"
-                    });
-
-                /*routes.MapRoute(
-                    "administrative",
-                    "{controller=Administrative}/{action=Administrative}/{view?}");*/
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback", 
+                    defaults: new { controller = "Home", action = "Index" });
             });
+     
         }
     }
 }

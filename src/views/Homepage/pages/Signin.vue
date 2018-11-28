@@ -7,26 +7,29 @@
                         <h3 class="text-uppercase">Prisijungimas</h3>
                     </div>
                     <div class="card-body">
-                        <!-- Email -->
+                        <transition name="fade" mode="out-in">
+                            <div v-if="error.present">
+                                {{ error.message }}
+                            </div>
+                        </transition>
+                        <!-- Username -->
                         <div class="md-form">
-                            <input type="email" id="materialLoginFormEmail" class="form-control">
-                            <label for="materialLoginFormEmail">El. paštas</label>
+                            <input type="text" id="username" class="form-control" v-model="username">
+                            <label for="username">Prisijungimo vardas</label>
                         </div>
                         <!-- Password -->
                         <div class="md-form">
-                            <input type="password" id="materialLoginFormPassword" class="form-control">
-                            <label for="materialLoginFormPassword">Slaptažodis</label>
+                            <input type="password" id="password" class="form-control" v-model="password">
+                            <label for="password">Slaptažodis</label>
                         </div>
-                        <div class="d-flex justify-content-end">
-                            <div>
-                                <!-- Remember me -->
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input rounded-0" id="defaultLoginFormRemember">
-                                    <label class="custom-control-label" for="defaultLoginFormRemember">Prisiminti mane</label>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-outline-white btn-block my-4 waves-effect rounded-0 z-depth-0" type="submit">Prisijungti</button>
+                        <button class="btn btn-white btn-block my-4 waves-effect rounded-0 z-depth-0" @click="submit">
+                            <span v-if="loading">
+                                <i class="fas fa-spinner"></i>
+                            </span>
+                            <span v-else>
+                                Prisijungti
+                            </span>
+                        </button>
                         <hr>
                         <a href="">Pamiršote slaptažodį?</a><br>
                         <a @click="$router.push({ name: 'registration' })">Naujo vartotojo registracija</a>
@@ -36,3 +39,37 @@
         </div>
     </div>
 </template>
+<script>
+import { ClientService } from "~/services/client.service"
+export default {
+    data: () => ({
+        loading: false,
+        username: "",
+        password: "",
+        error: {
+            present: false,
+            message: ""
+        }
+    }),
+    methods: {
+        submit() {
+            this.loading = true
+            axios.post('/api/authentication/validate', { 
+                username: this.username, 
+                password: this.password 
+            })
+            .then((response) => {
+                ClientService.setAuthorizationKey(response.data.authorizationKey)
+                this.$store.commit("SetClient", response.data)
+                this.$router.push({ name: "welcome" })
+                this.loading = false
+            })
+            .catch((error) => {
+                this.error.present = true
+                this.error.message = error.response.data.message
+                this.loading = false
+            })
+        }
+    }
+}
+</script>

@@ -1,9 +1,13 @@
+import { ClientService }  from '../services/client.service'
+
 export default {
-    AuthorizeClient: (state, ssid) => {
-        state.client.ssid = ssid
-        state.client.data.administrator = true
+    AuthorizeClient: (state, { username, password }) => {
+        const result = ClientService.validate(username, password)
+        if (result.success) {
+            state.client.data = result.data
+        }
     },
-    LogoutClient: (state) => {
-        state.client.ssid = null
-    }
+    SetClient: (state, client) => {
+        state.client.data = client
+    },
 }

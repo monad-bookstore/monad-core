@@ -1,4 +1,4 @@
 export default {
-    isAuthenticated: state => !!state.client.ssid,
-    isAdministrator: state => !!_.get(state.client, "data.administrator")
+    isAuthenticated: state => !!state.client.data,
+    isAdministrator: state => _.get(state.client, "data.accessFlag", -1) === 1
 }

@@ -1,3 +1,5 @@
+import authorized from '../../../middleware/authorized';
+
 export default [
     {
         path: '/',
@@ -28,7 +30,8 @@ export default [
         name: 'cart',
         component: require('../pages/Cart.vue').default,
         meta: {
-            titled: "Pirkinių krepšelis - MONAD.LT"
+            titled: "Pirkinių krepšelis - MONAD.LT",
+            middleware: authorized
         }
     },
     {

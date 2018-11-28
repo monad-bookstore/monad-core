@@ -23,10 +23,10 @@
     export default {
         methods: {
             authorize: function() {
-                this.$store.commit("AuthorizeClient", "Administrator-PrototypeTest")
+                //this.$store.commit("AuthorizeClient", "Administrator-PrototypeTest")
             },
             logout: function() {
-                this.$store.commit("LogoutClient")
+                //this.$store.commit("LogoutClient")
             }
         },
         components: {

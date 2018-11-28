@@ -1,28 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
 
 import getters from "./getters"
 import mutations from "./mutations"
+import actions from "./actions"
 
 Vue.use(Vuex)
-
 const store = new Vuex.Store({
     state: {
         client: {
-            ssid: null,
-            data: {}
+            data: null
         },
-        loaded: false
     },
     getters,
     mutations,
-    plugins: [
-        createPersistedState({
-            key: "client",
-            storage: window.sessionStorage
-        })
-    ]
+    actions,
 })
 
 export default store;
