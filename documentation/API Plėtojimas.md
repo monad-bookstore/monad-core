@@ -53,14 +53,14 @@ API išbandymui turbūt patogiausia naudoti [Postman](https://www.getpostman.com
 1. Iš pradžių reikia gauti autorizacijos raktą.
    POST metodu siunčiama užklausa į http://localhost:5000/api/authentication/validate
 
-![Screenshot_1](assets\Screenshot_1.png)
+![Screenshot_1](assets/Screenshot_1.png)
 
 2. Gaunamas atsakas. Pasirenkamas `authorizationKey` ir nukopijuojamas.
-   ![Screenshot_2](assets\Screenshot_2.png)
+   ![Screenshot_2](assets/Screenshot_2.png)
 
 3. Ir toliau kitose užklausose `Authorization` meniu pasirenkamas `Bearer Token` ir įklijuojamas `authorizationKey`.
 
-   ![Screenshot_3](assets\Screenshot_3.png)
+   ![Screenshot_3](assets/Screenshot_3.png)
 
 4. Toliau galima vykdyti visas reikiamas užklausas kur yra autorizacijos reikalavimas.
 
