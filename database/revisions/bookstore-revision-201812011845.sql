@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 27, 2018 at 06:50 PM
+-- Generation Time: Dec 01, 2018 at 04:45 PM
 -- Server version: 5.7.21
 -- PHP Version: 7.1.16
 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `book_authors` (
 
 DROP TABLE IF EXISTS `cases`;
 CREATE TABLE IF NOT EXISTS `cases` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `client_id` int(11) NOT NULL,
   `support_id` int(11) NOT NULL,
   `status` tinyint(3) NOT NULL,
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `cases` (
 
 DROP TABLE IF EXISTS `case_attachment`;
 CREATE TABLE IF NOT EXISTS `case_attachment` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `case_message_id` int(11) NOT NULL,
   `attachment_url` text COLLATE utf8_lithuanian_ci,
   PRIMARY KEY (`id`),
@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `case_attachment` (
 
 DROP TABLE IF EXISTS `case_message`;
 CREATE TABLE IF NOT EXISTS `case_message` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `case_id` int(11) NOT NULL,
   `contents` text COLLATE utf8_lithuanian_ci,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
 --
 
 INSERT INTO `clients` (`id`, `access_flag`, `authorization_key`, `username`, `password`, `email`, `updated_at`, `created_at`) VALUES
-(1, 1, NULL, 'administrator', '$2a$11$rlTawGsNIV4nPEZeHfTpie8L0GcZ1h.YySqyljlJlAzC9Du7yvX.O', 'administratord@ministrators.com', '2018-11-27 11:21:47', '2018-11-26 16:30:34');
+(1, 1, NULL, 'administrator', '$2a$11$rlTawGsNIV4nPEZeHfTpie8L0GcZ1h.YySqyljlJlAzC9Du7yvX.O', 'administrator@monad.lt', '2018-11-28 20:46:18', '2018-11-26 16:30:34');
 
 -- --------------------------------------------------------
 
@@ -521,13 +521,20 @@ INSERT INTO `phone_numbers` (`id`, `client_id`, `number`, `label`) VALUES
 
 DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE IF NOT EXISTS `profiles` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `client_id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `surname` varchar(255) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_profile_clients1_idx` (`client_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
+
+--
+-- Dumping data for table `profiles`
+--
+
+INSERT INTO `profiles` (`id`, `client_id`, `name`, `surname`) VALUES
+(1, 1, 'Lmao', 'Pavarde');
 
 -- --------------------------------------------------------
 
@@ -537,7 +544,7 @@ CREATE TABLE IF NOT EXISTS `profiles` (
 
 DROP TABLE IF EXISTS `publishers`;
 CREATE TABLE IF NOT EXISTS `publishers` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `country` varchar(255) COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
