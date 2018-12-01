@@ -45,7 +45,7 @@ namespace Application.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, client.Id.ToString()), 
-                    new Claim(ClaimTypes.Role, Enum.GetName(typeof(AccessType), client.AccessFlag))
+                    new Claim(ClaimTypes.Role, Enum.GetName(typeof(AccessType), client.AccessFlag)),
                 }),
                 Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Models;
+using Application.Models.DTOs;
 using Application.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -17,24 +19,27 @@ namespace Application.Controllers.API
     {
         private readonly IClientService _client;
         private readonly BookstoreContext _context;
+        private readonly IMapper _mapper;
 
-        public AuthenticationController(IClientService clientService, BookstoreContext context)
+        public AuthenticationController(IClientService clientService, BookstoreContext context, IMapper mapper)
         {
             _client = clientService;
             _context = context;
+            _mapper = mapper;
         }
 
         [Authorize]
         [Route("client")]
         public IActionResult Client()
         {
-            var cid = Convert.ToInt32(HttpContext.User.Identity.Name);
-            Client client = _context.Clients.SingleOrDefault(c => c.Id == cid);
+            Client client = _context
+                .Clients
+                .SingleOrDefault(c => c.Id.ToString() == User.Identity.Name);
+
             if (client == null)
                 return Unauthorized();
 
-            client.Password = null;
-            return Ok(client);
+            return Ok(_mapper.Map<ClientDTO>(client));
         }
 
         [Route("validate")]
