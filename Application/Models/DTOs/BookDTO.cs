@@ -12,9 +12,7 @@ namespace Application.Models.DTOs
         ////BCC/ BEGIN CUSTOM CODE SECTION 
         ////ECC/ END CUSTOM CODE SECTION 
         public int Id { get; set; }
-        public int AuthorId { get; set; }
         public int CategoryId { get; set; }
-        public int PublisherId { get; set; }
         public string Title { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }

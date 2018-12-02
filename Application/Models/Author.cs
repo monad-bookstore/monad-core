@@ -9,7 +9,6 @@ namespace Application.Models
         public Author()
         {
             BookAuthors = new HashSet<BookAuthor>();
-            Books = new HashSet<Book>();
         }
 
         public int Id { get; set; }
@@ -21,6 +20,5 @@ namespace Application.Models
         public DateTime? DeathDate { get; set; }
 
         public ICollection<BookAuthor> BookAuthors { get; set; }
-        public ICollection<Book> Books { get; set; }
     }
 }

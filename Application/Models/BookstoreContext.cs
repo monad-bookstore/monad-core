@@ -28,7 +28,6 @@ namespace Application.Models
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<PhoneNumber> PhoneNumbers { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
-        public virtual DbSet<Publisher> Publishers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -154,21 +153,11 @@ namespace Application.Models
             {
                 entity.ToTable("books", "bookstore");
 
-                entity.HasIndex(e => e.AuthorId)
-                    .HasName("fk_books_authors1_idx");
-
                 entity.HasIndex(e => e.CategoryId)
                     .HasName("fk_books_categories1_idx");
 
-                entity.HasIndex(e => e.PublisherId)
-                    .HasName("fk_books_publishers1_idx");
-
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.AuthorId)
-                    .HasColumnName("author_id")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.CategoryId)
@@ -211,10 +200,6 @@ namespace Application.Models
                     .HasColumnName("price")
                     .HasColumnType("decimal(9,2)");
 
-                entity.Property(e => e.PublisherId)
-                    .HasColumnName("publisher_id")
-                    .HasColumnType("int(11)");
-
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasColumnName("title")
@@ -231,23 +216,11 @@ namespace Application.Models
                     .HasColumnName("updated_at")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                entity.HasOne(d => d.Author)
-                    .WithMany(p => p.Books)
-                    .HasForeignKey(d => d.AuthorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_books_authors1");
-
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Books)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_books_categories1");
-
-                entity.HasOne(d => d.Publisher)
-                    .WithMany(p => p.Books)
-                    .HasForeignKey(d => d.PublisherId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_books_publishers1");
             });
 
             modelBuilder.Entity<BookAuthor>(entity =>
@@ -586,30 +559,6 @@ namespace Application.Models
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_profile_clients1");
-            });
-
-            modelBuilder.Entity<Publisher>(entity =>
-            {
-                entity.ToTable("publishers", "bookstore");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Country)
-                    .HasColumnName("country")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
             });
         }
     }
