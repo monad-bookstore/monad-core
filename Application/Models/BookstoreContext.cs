@@ -221,6 +221,12 @@ namespace Application.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CoverUrl)
+                    .IsRequired()
+                    .HasColumnName("cover_url")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnName("updated_at")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
