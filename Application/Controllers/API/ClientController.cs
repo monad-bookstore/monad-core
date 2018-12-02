@@ -31,7 +31,7 @@ namespace Application.Controllers.API
             {
                 return BadRequest(new
                 {
-                    Username = new List<string> { "Vartotojas vardas užimtas." } 
+                    Username = new List<string> { "Vartotojo vardas užimtas." } 
                 });
             }
 
