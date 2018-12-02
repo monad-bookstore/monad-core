@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Application.Models.Specifics;
+using BCrypt.Net;
 using AutoMapper;
 
 namespace Application.Controllers.API
@@ -27,21 +29,28 @@ namespace Application.Controllers.API
             if (string.IsNullOrEmpty(email))
                 return;
 
-            client.Email = email ?? client.Email;
+            client.Email = email;
             _context.SaveChanges();
         }
 
         [Authorize]
         [Route("modify/password")]
         [HttpPost]
-        public void ModifyClientPassword(dynamic request)
+        public IActionResult ModifyClientPassword(PasswordModify data)
         {
             Client client = GetClient();
             if (client == null)
-                return;
+                return Unauthorized();
 
-            client.Password = BCrypt.Net.BCrypt.HashPassword(request.password.ToString()) ?? client.Password;
+            if (string.IsNullOrEmpty(data.Password))
+                return BadRequest(new { message = "Blogas slaptažodis." });
+
+            if (!BCrypt.Net.BCrypt.Verify(data.CurrentPassword, client.Password))
+                return BadRequest(new { message = "Neteisingas dabartinis slaptažodis." });
+
+            client.Password = BCrypt.Net.BCrypt.HashPassword(data.Password);
             _context.SaveChanges();
+            return Ok(new { message = "Slaptažodis atnaujintas." });
         }
     }
 }
