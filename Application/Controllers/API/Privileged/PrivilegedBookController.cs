@@ -27,6 +27,7 @@ namespace Application.Controllers.API.Privileged
                 .Include(x => x.BookAuthors)
                 .Select(x => new BookDTO
                 {
+                    Id = x.Id,
                     CategoryId = x.CategoryId,
                     Title = x.Title,
                     CoverUrl = x.CoverUrl,
