@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Controllers.API.Privileged
 {
@@ -23,7 +24,17 @@ namespace Application.Controllers.API.Privileged
         public IQueryable<BookDTO> FetchBookList()
         {
             return _context.Books
-                .Select(x => _mapper.Map<BookDTO>(x));
+                .Include(x => x.BookAuthors)
+                .Select(x => new BookDTO
+                {
+                    CategoryId = x.CategoryId,
+                    Title = x.Title,
+                    CoverUrl = x.CoverUrl,
+                    Price = x.Price,
+                    Description = x.Description,
+                    Pages = x.Pages,
+                    Authors = x.BookAuthors.Select(c => c.AuthorId).ToList()
+                });
         }
 
         [Authorize(Roles = "Administrator,Manager")]

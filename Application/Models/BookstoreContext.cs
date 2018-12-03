@@ -43,9 +43,6 @@ namespace Application.Models
                 entity.HasIndex(e => e.ClientId)
                     .HasName("fk_addresses_clients1_idx");
 
-                entity.HasIndex(e => e.CountryId)
-                    .HasName("fk_addresses_countries1_idx");
-
                 entity.HasIndex(e => e.PhoneId)
                     .HasName("fk_addresses_phone_numbers1_idx");
 
@@ -53,23 +50,11 @@ namespace Application.Models
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.AddressLine1)
+                entity.Property(e => e.AddressText)
                     .IsRequired()
-                    .HasColumnName("address_line_1")
+                    .HasColumnName("address")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AddressLine2)
-                    .IsRequired()
-                    .HasColumnName("address_line_2")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AddressLine3)
-                    .IsRequired()
-                    .HasColumnName("address_line_3")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.ClientId)
                     .HasColumnName("client_id")
@@ -83,29 +68,17 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("label")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
-                entity.Property(e => e.Locality)
+                entity.Property(e => e.City)
                     .IsRequired()
-                    .HasColumnName("locality")
+                    .HasColumnName("city")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.PhoneId)
                     .HasColumnName("phone_id")
                     .HasColumnType("int(11)");
-
-                entity.Property(e => e.PostalCode)
-                    .IsRequired()
-                    .HasColumnName("postal_code")
-                    .HasMaxLength(1)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Region)
-                    .IsRequired()
-                    .HasColumnName("region")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Addresses)
@@ -140,13 +113,13 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.Surname)
                     .IsRequired()
                     .HasColumnName("surname")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
             });
 
             modelBuilder.Entity<Book>(entity =>
@@ -171,13 +144,13 @@ namespace Application.Models
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasColumnName("description")
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.Edition)
                     .IsRequired()
                     .HasColumnName("edition")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.Isbn)
                     .HasColumnName("isbn")
@@ -204,13 +177,13 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("title")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.CoverUrl)
                     .IsRequired()
                     .HasColumnName("cover_url")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnName("updated_at")
@@ -315,7 +288,7 @@ namespace Application.Models
 
                 entity.Property(e => e.AttachmentUrl)
                     .HasColumnName("attachment_url")
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.CaseMessageId)
                     .HasColumnName("case_message_id")
@@ -346,7 +319,7 @@ namespace Application.Models
 
                 entity.Property(e => e.Contents)
                     .HasColumnName("contents")
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -375,7 +348,7 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("label")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.ParentId)
                     .HasColumnName("parent_id")
@@ -397,7 +370,7 @@ namespace Application.Models
                 entity.Property(e => e.AuthorizationKey)
                     .HasColumnName("authorization_key")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -407,7 +380,7 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("email")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.Password)
                     .IsRequired()
@@ -445,13 +418,13 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(80)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.Nicename)
                     .IsRequired()
                     .HasColumnName("nicename")
                     .HasMaxLength(80)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.Numcode)
                     .HasColumnName("numcode")
@@ -507,6 +480,9 @@ namespace Application.Models
             {
                 entity.ToTable("phone_numbers", "bookstore");
 
+                entity.HasIndex(e => e.ClientId)
+                    .HasName("fk_phone_numbers_clients1_idx");
+
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
@@ -519,13 +495,19 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("label")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.Number)
                     .IsRequired()
                     .HasColumnName("number")
                     .HasMaxLength(64)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.PhoneNumbers)
+                    .HasForeignKey(d => d.ClientId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_phone_numbers_clients1");
             });
 
             modelBuilder.Entity<Profile>(entity =>
@@ -547,12 +529,12 @@ namespace Application.Models
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.Surname)
                     .HasColumnName("surname")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Profiles)

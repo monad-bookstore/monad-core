@@ -16,5 +16,6 @@ namespace Application.Models
         public string Label { get; set; }
 
         public ICollection<Address> Addresses { get; set; }
+        public Client Client { get; set; }
     }
 }

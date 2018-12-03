@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Application.Models.DTOs;
 using Application.Models.Specifics;
 using BCrypt.Net;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Controllers.API
 {
@@ -55,6 +57,28 @@ namespace Application.Controllers.API
             _context.SaveChanges();
             return Ok(new { message = "Nauja paskyra sėkmingai sukurta. Galite prisijungti." });
         }
+
+        [Authorize]
+        [Route("addresses")]
+        [HttpGet]
+        public IQueryable<AddressDTO> FetchClientAddresses()
+        {
+            return _context
+                .Addresses
+                .Where(c => c.ClientId == GetClient().Id)
+                .Select(c => _mapper.Map<AddressDTO>(c));
+        }
+
+        [Authorize]
+        [Route("numbers")]
+        [HttpGet]
+        public IQueryable<PhoneNumberDTO> FetchClientPhoneNumbers()
+        {
+            return _context
+                .PhoneNumbers
+                .Where(c => c.ClientId == GetClient().Id)
+                .Select(c => _mapper.Map<PhoneNumberDTO>(c));
+;        }
 
         [Authorize]
         [Route("modify/mail")]

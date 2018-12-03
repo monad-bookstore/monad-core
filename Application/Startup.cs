@@ -30,7 +30,10 @@ namespace Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper();
+            services.AddAutoMapper(options =>
+            {
+                options.AllowNullCollections = false;
+            });
             services.AddCors();
             services.AddDbContext<BookstoreContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));

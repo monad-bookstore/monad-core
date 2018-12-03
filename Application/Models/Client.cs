@@ -14,6 +14,7 @@ namespace Application.Models
             CasesSupports = new HashSet<Case>();
             Orders = new HashSet<Order>();
             Profiles = new HashSet<Profile>();
+            PhoneNumbers = new HashSet<PhoneNumber>();
         }
 
         [BindNever]
@@ -41,6 +42,7 @@ namespace Application.Models
         public DateTime? CreatedAt { get; set; }
 
         public ICollection<Address> Addresses { get; set; }
+        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public ICollection<Case> Cases { get; set; }
         public ICollection<Case> CasesSupports { get; set; }
         public ICollection<Order> Orders { get; set; }
