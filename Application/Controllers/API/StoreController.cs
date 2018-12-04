@@ -37,6 +37,27 @@ namespace Application.Controllers.API
                 });
         }
 
+        [Authorize]
+        [Route("product/{id}")]
+        public ProductExpanded GetProduct(int id)
+        {
+            return _context.Books
+                .Include(x => x.BookAuthors)
+                .ThenInclude(x => x.Author)
+                .Select(x => new ProductExpanded
+                {
+                    Id = x.Id,
+                    CategoryId = x.CategoryId,
+                    Title = x.Title,
+                    CoverUrl = x.CoverUrl,
+                    Price = x.Price,
+                    Description = x.Description,
+                    Pages = x.Pages,
+                    Authors = x.BookAuthors.Select(c => _mapper.Map<AuthorDTO>(c.Author)).ToList()
+                })
+                .SingleOrDefault(c => c.Id == id);
+        }
+
         public StoreController(BookstoreContext context, IMapper mapper) : base(context, mapper) {}
     }
 }
