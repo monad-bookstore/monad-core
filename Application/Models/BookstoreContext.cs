@@ -28,6 +28,8 @@ namespace Application.Models
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<PhoneNumber> PhoneNumbers { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
+        public virtual DbSet<Ordered> Ordered { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -474,6 +476,25 @@ namespace Application.Models
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_orders_clients1");
+            });
+
+            modelBuilder.Entity<Ordered>(entity =>
+            {
+                entity.HasKey(e => new { e.OrderId, e.BookId });
+
+                entity.ToTable("ordered", "bookstore");
+
+                entity.HasIndex(e => e.BookId)
+                    .HasName("fk_order_book");
+
+                entity.Property(e => e.OrderId)
+                    .HasColumnName("order_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.BookId)
+                    .HasColumnName("book_id")
+                    .HasColumnType("int(11)");
+
             });
 
             modelBuilder.Entity<PhoneNumber>(entity =>

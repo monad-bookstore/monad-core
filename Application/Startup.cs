@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Net;
 using System.Text;
 using AutoMapper;
 
@@ -70,6 +71,11 @@ namespace Application
                 options.SlidingExpiration = true;
             });
 
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.KnownProxies.Add(IPAddress.Parse("91.211.246.132"));
+            });
+
             IConfigurationSection settingSection = Configuration.GetSection("ApplicationSettings");
             services.Configure<ApplicationSettings>(settingSection);
 
@@ -90,7 +96,7 @@ namespace Application
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false
-                };
+                }; 
             });
             
 
@@ -102,12 +108,12 @@ namespace Application
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
         {
-            if (env.IsDevelopment())
+            /*if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
             else
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error");*/
 
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
 
             // global cors policy
             app.UseCors(x => x
@@ -117,28 +123,9 @@ namespace Application
                 .AllowCredentials());
 
             app.UseAuthentication();
-
-
             logger.AddConsole(Configuration.GetSection("Logging"));
             logger.AddDebug();
-
-           
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default", 
-                    template: "{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapRoute(
-                    "administrative", 
-                    "administrative/{*pages}",
-                    new { controller = "Administrative", action = "Index" });
-
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback", 
-                    defaults: new { controller = "Home", action = "Index" });
-            });
-     
+            app.UseMvc();
         }
     }
 }

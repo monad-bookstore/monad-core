@@ -14,7 +14,7 @@ namespace Application.Models
         public DateTime? CreatedAt { get; set; }
 
         public Address Address { get; set; }
-        [IgnoreDataMember]
         public Client Client { get; set; }
+        public ICollection<Ordered> Ordered { get; set; }
     }
 }

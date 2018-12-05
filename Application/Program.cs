@@ -19,6 +19,13 @@ namespace Application
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseUrls("http://localhost:5000")
                 .UseStartup<Startup>();
+
+                /*.UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseUrls("http://localhost:5000", "http://http://91.211.246.132:1000/")*/
     }
 }
