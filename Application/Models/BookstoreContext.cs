@@ -24,16 +24,16 @@ namespace Application.Models
         public virtual DbSet<CaseMessage> CaseMessages { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Ordered> Ordered { get; set; }
         public virtual DbSet<PhoneNumber> PhoneNumbers { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
-        public virtual DbSet<Ordered> Ordered { get; set; }
-
+        public virtual DbSet<Rating> Ratings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,6 +45,9 @@ namespace Application.Models
                 entity.HasIndex(e => e.ClientId)
                     .HasName("fk_addresses_clients1_idx");
 
+                entity.HasIndex(e => e.CountryId)
+                    .HasName("fk_addresses_countries1_idx");
+
                 entity.HasIndex(e => e.PhoneId)
                     .HasName("fk_addresses_phone_numbers1_idx");
 
@@ -54,9 +57,15 @@ namespace Application.Models
 
                 entity.Property(e => e.AddressText)
                     .IsRequired()
-                    .HasColumnName("address")
+                    .HasColumnName("address_text")
                     .HasMaxLength(255)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
+
+                entity.Property(e => e.City)
+                    .IsRequired()
+                    .HasColumnName("city")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ClientId)
                     .HasColumnName("client_id")
@@ -70,13 +79,7 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("label")
                     .HasMaxLength(255)
-                    .IsUnicode(true);
-
-                entity.Property(e => e.City)
-                    .IsRequired()
-                    .HasColumnName("city")
-                    .HasMaxLength(255)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PhoneId)
                     .HasColumnName("phone_id")
@@ -87,7 +90,13 @@ namespace Application.Models
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_addresses_clients1");
-            
+
+                entity.HasOne(d => d.Country)
+                    .WithMany(p => p.Addresses)
+                    .HasForeignKey(d => d.CountryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_addresses_countries1");
+
                 entity.HasOne(d => d.Phone)
                     .WithMany(p => p.Addresses)
                     .HasForeignKey(d => d.PhoneId)
@@ -115,13 +124,13 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(255)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Surname)
                     .IsRequired()
                     .HasColumnName("surname")
                     .HasMaxLength(255)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Book>(entity =>
@@ -139,6 +148,11 @@ namespace Application.Models
                     .HasColumnName("category_id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.CoverUrl)
+                    .HasColumnName("cover_url")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
@@ -146,26 +160,7 @@ namespace Application.Models
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasColumnName("description")
-                    .IsUnicode(true);
-
-                entity.Property(e => e.Edition)
-                    .IsRequired()
-                    .HasColumnName("edition")
-                    .HasMaxLength(255)
-                    .IsUnicode(true);
-
-                entity.Property(e => e.Isbn)
-                    .HasColumnName("isbn")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Isbn13)
-                    .HasColumnName("isbn13")
-                    .HasColumnType("int(16)");
-
-                entity.Property(e => e.Language)
-                    .HasColumnName("language")
-                    .HasColumnType("char(3)")
-                    .HasDefaultValueSql("LT");
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Pages)
                     .HasColumnName("pages")
@@ -179,13 +174,7 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("title")
                     .HasMaxLength(255)
-                    .IsUnicode(true);
-
-                entity.Property(e => e.CoverUrl)
-                    .IsRequired()
-                    .HasColumnName("cover_url")
-                    .HasMaxLength(255)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnName("updated_at")
@@ -240,8 +229,7 @@ namespace Application.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.ClientId)
                     .HasColumnName("client_id")
@@ -264,13 +252,13 @@ namespace Application.Models
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.HasOne(d => d.Client)
-                    .WithMany(p => p.Cases)
+                    .WithMany(p => p.CaseClients)
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_cases_clients1");
 
                 entity.HasOne(d => d.Support)
-                    .WithMany(p => p.CasesSupports)
+                    .WithMany(p => p.CaseSupports)
                     .HasForeignKey(d => d.SupportId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_cases_clients2");
@@ -285,12 +273,11 @@ namespace Application.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.AttachmentUrl)
                     .HasColumnName("attachment_url")
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CaseMessageId)
                     .HasColumnName("case_message_id")
@@ -312,8 +299,7 @@ namespace Application.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.CaseId)
                     .HasColumnName("case_id")
@@ -321,7 +307,7 @@ namespace Application.Models
 
                 entity.Property(e => e.Contents)
                     .HasColumnName("contents")
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -350,7 +336,7 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("label")
                     .HasMaxLength(255)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ParentId)
                     .HasColumnName("parent_id")
@@ -372,7 +358,7 @@ namespace Application.Models
                 entity.Property(e => e.AuthorizationKey)
                     .HasColumnName("authorization_key")
                     .HasMaxLength(255)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -382,7 +368,7 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("email")
                     .HasMaxLength(255)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Password)
                     .IsRequired()
@@ -397,6 +383,52 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("username")
                     .HasColumnType("char(21)");
+            });
+
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.ToTable("comments", "bookstore");
+
+                entity.HasIndex(e => e.BookId)
+                    .HasName("fk_comments_books1_idx");
+
+                entity.HasIndex(e => e.ClientId)
+                    .HasName("fk_comments_clients1_idx");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.BookId)
+                    .HasColumnName("book_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.ClientId)
+                    .HasColumnName("client_id")
+                    .HasColumnType("int(11)");
+
+
+                entity.Property(e => e.Message)
+                    .IsRequired()
+                    .HasColumnName("message")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.HasOne(d => d.Book)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.BookId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_comments_books1");
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.ClientId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_comments_clients1");
             });
 
             modelBuilder.Entity<Country>(entity =>
@@ -420,13 +452,13 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(80)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Nicename)
                     .IsRequired()
                     .HasColumnName("nicename")
                     .HasMaxLength(80)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Numcode)
                     .HasColumnName("numcode")
@@ -471,6 +503,12 @@ namespace Application.Models
                     .HasColumnName("updated_at")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+                entity.HasOne(d => d.Address)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.AddressId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_orders_addresses1");
+
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.ClientId)
@@ -495,6 +533,17 @@ namespace Application.Models
                     .HasColumnName("book_id")
                     .HasColumnType("int(11)");
 
+                entity.HasOne(d => d.Book)
+                    .WithMany(p => p.Ordered)
+                    .HasForeignKey(d => d.BookId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_order_book");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.Ordered)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_book_order");
             });
 
             modelBuilder.Entity<PhoneNumber>(entity =>
@@ -516,13 +565,13 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("label")
                     .HasMaxLength(255)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Number)
                     .IsRequired()
                     .HasColumnName("number")
                     .HasMaxLength(64)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.PhoneNumbers)
@@ -540,8 +589,7 @@ namespace Application.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.ClientId)
                     .HasColumnName("client_id")
@@ -550,18 +598,58 @@ namespace Application.Models
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
                     .HasMaxLength(255)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Surname)
                     .HasColumnName("surname")
                     .HasMaxLength(255)
-                    .IsUnicode(true);
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Profiles)
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_profile_clients1");
+            });
+
+            modelBuilder.Entity<Rating>(entity =>
+            {
+                entity.ToTable("ratings", "bookstore");
+
+                entity.HasIndex(e => e.BookId)
+                    .HasName("fk_ratings_books1_idx");
+
+                entity.HasIndex(e => e.ClientId)
+                    .HasName("fk_ratings_clients1_idx");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.BookId)
+                    .HasColumnName("book_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.ClientId)
+                    .HasColumnName("client_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Rating1)
+                    .HasColumnName("rating")
+                    .HasColumnType("int(2)");
+
+                entity.HasOne(d => d.Book)
+                    .WithMany(p => p.Ratings)
+                    .HasForeignKey(d => d.BookId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_ratings_books1");
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.Ratings)
+                    .HasForeignKey(d => d.ClientId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_ratings_clients1");
             });
         }
     }

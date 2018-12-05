@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Application.Models
 {
@@ -14,9 +13,7 @@ namespace Application.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        [Column(TypeName = "date")]
         public DateTime? BirthDate { get; set; }
-        [Column(TypeName = "date")]
         public DateTime? DeathDate { get; set; }
 
         public ICollection<BookAuthor> BookAuthors { get; set; }

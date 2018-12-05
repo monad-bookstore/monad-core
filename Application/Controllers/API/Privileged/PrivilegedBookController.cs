@@ -19,6 +19,7 @@ namespace Application.Controllers.API.Privileged
     {
         public PrivilegedBookController(BookstoreContext context, IMapper mapper) : base(context, mapper) {}
 
+        
         [Authorize(Roles = "Administrator,Manager")]
         [Route("get")]
         public IQueryable<BookDTO> FetchBookList()

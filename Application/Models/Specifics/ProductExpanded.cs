@@ -24,6 +24,8 @@ namespace Application.Models.Specifics
         public decimal Price { get; set; }
         public string Description { get; set; }
         public int Pages { get; set; }
+        public ICollection<RatingDTO> Ratings { get; set; }
+        public ICollection<CommentDTO> Comments { get; set; }
         public ICollection<AuthorDTO> Authors { get; set; }
     }
 }

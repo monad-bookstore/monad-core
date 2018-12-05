@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Application.Models
 {
@@ -10,42 +8,31 @@ namespace Application.Models
         public Client()
         {
             Addresses = new HashSet<Address>();
-            Cases = new HashSet<Case>();
-            CasesSupports = new HashSet<Case>();
+            CaseClients = new HashSet<Case>();
+            CaseSupports = new HashSet<Case>();
+            Comments = new HashSet<Comment>();
             Orders = new HashSet<Order>();
-            Profiles = new HashSet<Profile>();
             PhoneNumbers = new HashSet<PhoneNumber>();
+            Profiles = new HashSet<Profile>();
+            Ratings = new HashSet<Rating>();
         }
 
-        [BindNever]
         public int Id { get; set; }
-
-        [BindNever]
         public byte AccessFlag { get; set; }
-
-        [BindNever]
         public string AuthorizationKey { get; set; }
-
-        [BindNever]
         public string Username { get; set; }
-
-        [StringLength(254)]
         public string Password { get; set; }
-
-        [EmailAddress]
         public string Email { get; set; }
-
-        [BindNever]
         public DateTime? UpdatedAt { get; set; }
-
-        [BindNever]
         public DateTime? CreatedAt { get; set; }
 
         public ICollection<Address> Addresses { get; set; }
-        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
-        public ICollection<Case> Cases { get; set; }
-        public ICollection<Case> CasesSupports { get; set; }
+        public ICollection<Case> CaseClients { get; set; }
+        public ICollection<Case> CaseSupports { get; set; }
+        public ICollection<Comment> Comments { get; set; }
         public ICollection<Order> Orders { get; set; }
+        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public ICollection<Profile> Profiles { get; set; }
+        public ICollection<Rating> Ratings { get; set; }
     }
 }

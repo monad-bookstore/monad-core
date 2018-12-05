@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace Application.Models
 {
     public partial class Order
     {
+        public Order()
+        {
+            Ordered = new HashSet<Ordered>();
+        }
+
         public int Id { get; set; }
         public int ClientId { get; set; }
         public int AddressId { get; set; }

@@ -1,0 +1,1 @@
+dotnet ef dbcontext scaffold "server=localhost;userid=root;password=;database=bookstore;charset=utf8" MySql.Data.EntityFrameworkCore -o .\Models -f --context-dir Models -c BookstoreContext

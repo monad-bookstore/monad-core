@@ -21,7 +21,6 @@ namespace Application
             WebHost.CreateDefaultBuilder(args)
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseUrls("http://localhost:5000")
                 .UseStartup<Startup>();
 
                 /*.UseKestrel()
