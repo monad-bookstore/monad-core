@@ -23,6 +23,7 @@ namespace Application.Controllers.API.Privileged
         [Route("modify/{id}")]
         public IActionResult Modify(int id, ProductExpanded request)
         {
+            //
             Book modifying = _context.Books
                 .Include(c => c.BookAuthors)
                 .ThenInclude(c => c.Author)
