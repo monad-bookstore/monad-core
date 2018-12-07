@@ -6,7 +6,7 @@ namespace Application.Models
     public partial class Rating
     {
         public int Id { get; set; }
-        public int ClientId { get; set; }
+        public int? ClientId { get; set; }
         public int BookId { get; set; }
         public decimal Rating1 { get; set; }
 

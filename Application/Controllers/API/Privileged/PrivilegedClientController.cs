@@ -8,6 +8,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Profile = Application.Models.Profile;
 
 namespace Application.Controllers.API.Privileged
 {
@@ -90,6 +92,41 @@ namespace Application.Controllers.API.Privileged
             modifying.UpdatedAt = DateTime.Now;
             _context.SaveChanges();
             return Ok(modifying);
+        }
+
+        [Authorize(Roles = "Administrator,Manager")]
+        // {clientId} nurodo kad čia turi būti kažkokia reikšmė.
+        [Route("remove/{clientId}")]
+        [HttpGet]
+        public IActionResult RemoveClient(int clientId)
+        {
+            Client removing = _context.Clients
+                .Include(c => c.Profiles)
+                .Include(c => c.Addresses)
+                .Include(c => c.PhoneNumbers)
+                .Include(c => c.Orders)
+                .Include(c => c.Ratings)
+                .Include(c => c.Comments)
+                .SingleOrDefault(c => c.Id == clientId);
+
+            if (removing == null)
+                return Ok();
+
+            if (removing.AccessFlag == 1)
+                return Ok();
+
+            foreach (Profile profile in removing.Profiles)
+                _context.Profiles.Remove(profile);
+
+            foreach (Address address in removing.Addresses)
+                _context.Addresses.Remove(address);
+
+            foreach (PhoneNumber number in removing.PhoneNumbers)
+                _context.PhoneNumbers.Remove(number);
+           
+            _context.Clients.Remove(removing);
+            _context.SaveChanges();
+            return Ok();
         }
     }
 }

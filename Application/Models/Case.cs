@@ -11,7 +11,7 @@ namespace Application.Models
         }
 
         public int Id { get; set; }
-        public int ClientId { get; set; }
+        public int? ClientId { get; set; }
         public int SupportId { get; set; }
         public byte Status { get; set; }
         public DateTime? UpdatedAt { get; set; }

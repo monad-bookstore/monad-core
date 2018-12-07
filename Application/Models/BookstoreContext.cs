@@ -59,13 +59,13 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("address_text")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.City)
                     .IsRequired()
                     .HasColumnName("city")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.ClientId)
                     .HasColumnName("client_id")
@@ -79,7 +79,7 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("label")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.PhoneId)
                     .HasColumnName("phone_id")
@@ -124,13 +124,13 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.Surname)
                     .IsRequired()
                     .HasColumnName("surname")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
             });
 
             modelBuilder.Entity<Book>(entity =>
@@ -151,7 +151,7 @@ namespace Application.Models
                 entity.Property(e => e.CoverUrl)
                     .HasColumnName("cover_url")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -160,7 +160,7 @@ namespace Application.Models
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasColumnName("description")
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.Pages)
                     .HasColumnName("pages")
@@ -174,7 +174,7 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("title")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnName("updated_at")
@@ -207,13 +207,13 @@ namespace Application.Models
                 entity.HasOne(d => d.Author)
                     .WithMany(p => p.BookAuthors)
                     .HasForeignKey(d => d.AuthorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_book_author");
 
                 entity.HasOne(d => d.Book)
                     .WithMany(p => p.BookAuthors)
                     .HasForeignKey(d => d.BookId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_author_book");
             });
 
@@ -233,7 +233,8 @@ namespace Application.Models
 
                 entity.Property(e => e.ClientId)
                     .HasColumnName("client_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .IsRequired(false);
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -254,13 +255,13 @@ namespace Application.Models
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.CaseClients)
                     .HasForeignKey(d => d.ClientId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("fk_cases_clients1");
 
                 entity.HasOne(d => d.Support)
                     .WithMany(p => p.CaseSupports)
                     .HasForeignKey(d => d.SupportId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("fk_cases_clients2");
             });
 
@@ -277,7 +278,7 @@ namespace Application.Models
 
                 entity.Property(e => e.AttachmentUrl)
                     .HasColumnName("attachment_url")
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.CaseMessageId)
                     .HasColumnName("case_message_id")
@@ -307,7 +308,7 @@ namespace Application.Models
 
                 entity.Property(e => e.Contents)
                     .HasColumnName("contents")
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -336,7 +337,7 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("label")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.ParentId)
                     .HasColumnName("parent_id")
@@ -358,7 +359,7 @@ namespace Application.Models
                 entity.Property(e => e.AuthorizationKey)
                     .HasColumnName("authorization_key")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -368,7 +369,7 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("email")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.Password)
                     .IsRequired()
@@ -406,13 +407,14 @@ namespace Application.Models
 
                 entity.Property(e => e.ClientId)
                     .HasColumnName("client_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .IsRequired(false);
 
 
                 entity.Property(e => e.Message)
                     .IsRequired()
                     .HasColumnName("message")
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -421,13 +423,13 @@ namespace Application.Models
                 entity.HasOne(d => d.Book)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.BookId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_comments_books1");
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.ClientId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("fk_comments_clients1");
             });
 
@@ -452,13 +454,13 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(80)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.Nicename)
                     .IsRequired()
                     .HasColumnName("nicename")
                     .HasMaxLength(80)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.Numcode)
                     .HasColumnName("numcode")
@@ -489,7 +491,8 @@ namespace Application.Models
 
                 entity.Property(e => e.ClientId)
                     .HasColumnName("client_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .IsRequired(false);
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -512,7 +515,7 @@ namespace Application.Models
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.ClientId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("fk_orders_clients1");
             });
 
@@ -536,13 +539,13 @@ namespace Application.Models
                 entity.HasOne(d => d.Book)
                     .WithMany(p => p.Ordered)
                     .HasForeignKey(d => d.BookId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_order_book");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.Ordered)
                     .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_book_order");
             });
 
@@ -565,13 +568,13 @@ namespace Application.Models
                     .IsRequired()
                     .HasColumnName("label")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.Number)
                     .IsRequired()
                     .HasColumnName("number")
                     .HasMaxLength(64)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.PhoneNumbers)
@@ -598,12 +601,12 @@ namespace Application.Models
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.Property(e => e.Surname)
                     .HasColumnName("surname")
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode();
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Profiles)
@@ -633,7 +636,8 @@ namespace Application.Models
 
                 entity.Property(e => e.ClientId)
                     .HasColumnName("client_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .IsRequired(false);
 
                 entity.Property(e => e.Rating1)
                     .HasColumnName("rating")
@@ -642,13 +646,13 @@ namespace Application.Models
                 entity.HasOne(d => d.Book)
                     .WithMany(p => p.Ratings)
                     .HasForeignKey(d => d.BookId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_ratings_books1");
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Ratings)
                     .HasForeignKey(d => d.ClientId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("fk_ratings_clients1");
             });
         }
