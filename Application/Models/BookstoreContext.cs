@@ -398,8 +398,7 @@ namespace Application.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.BookId)
                     .HasColumnName("book_id")
