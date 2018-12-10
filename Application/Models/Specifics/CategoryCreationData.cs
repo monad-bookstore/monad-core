@@ -10,11 +10,6 @@ namespace Application.Models.Specifics
     {
         [Required]
         public string Label { get; set; }
-        public int ParentId { get; set; }
-
-        CategoryCreationData()
-        {
-            ParentId = 0;
-        }
+        public int? ParentId { get; set; }
     }
 }

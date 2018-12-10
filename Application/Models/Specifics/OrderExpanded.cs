@@ -9,7 +9,7 @@ namespace Application.Models.Specifics
     public class OrderExpanded
     {
         public int Id { get; set; }
-        public Client Client { get; set; }
+        public ClientExpanded Client { get; set; }
         public AddressDTO Address { get; set; }
         public List<BookDTO> Products { get; set; }
         public byte Status { get; set; }
