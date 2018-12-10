@@ -13,4 +13,4 @@ namespace Application.Models.Types
         Shipped = 3,
         Completed = 4
     }
-}
+}   

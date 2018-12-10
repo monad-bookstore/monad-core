@@ -227,14 +227,27 @@ namespace Application.Models
                 entity.HasIndex(e => e.SupportId)
                     .HasName("fk_cases_clients2_idx");
 
+                entity.HasIndex(e => e.OrderId)
+                    .HasName("fk_cases_orders1_idx");
+
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.OrderId)
+                    .HasColumnName("order_id")
+                    .HasColumnType("int(11)")
+                    .IsRequired();
 
                 entity.Property(e => e.ClientId)
                     .HasColumnName("client_id")
                     .HasColumnType("int(11)")
                     .IsRequired(false);
+
+                entity.Property(e => e.Title)
+                    .HasColumnName("title")
+                    .HasMaxLength(255)
+                    .HasColumnType("char(255)");
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -246,11 +259,18 @@ namespace Application.Models
 
                 entity.Property(e => e.SupportId)
                     .HasColumnName("support_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .IsRequired(false);
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnName("updated_at")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.Cases)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_cases_orders1_idx");
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.CaseClients)

@@ -20,5 +20,6 @@ namespace Application.Models
         public Address Address { get; set; }
         public Client Client { get; set; }
         public ICollection<Ordered> Ordered { get; set; }
+        public ICollection<Case> Cases { get; set; }
     }
 }
