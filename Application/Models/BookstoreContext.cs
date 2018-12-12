@@ -318,12 +318,19 @@ namespace Application.Models
                 entity.HasIndex(e => e.CaseId)
                     .HasName("fk_case_message_cases_idx");
 
+                entity.HasIndex(e => e.CaseId)
+                    .HasName("fk_case_message_clients1_idx");
+
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.CaseId)
                     .HasColumnName("case_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.ClientId)
+                    .HasColumnName("client_id")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.Contents)
@@ -339,6 +346,12 @@ namespace Application.Models
                     .HasForeignKey(d => d.CaseId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_case_message_cases");
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.CaseMessageCollection)
+                    .HasForeignKey(d => d.ClientId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("fk_case_message_clients1");
             });
 
             modelBuilder.Entity<Category>(entity =>

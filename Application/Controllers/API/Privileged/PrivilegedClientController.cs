@@ -65,7 +65,7 @@ namespace Application.Controllers.API.Privileged
         /// <returns>
         ///     Grąžina pakeistą objektą.
         /// </returns>
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator")]
         // {clientId} nurodo kad čia turi būti kažkokia reikšmė.
         [Route("modify/{clientId}")]
         [HttpPost]
@@ -94,7 +94,7 @@ namespace Application.Controllers.API.Privileged
             return Ok(modifying);
         }
 
-        [Authorize(Roles = "Administrator,Manager")]
+        [Authorize(Roles = "Administrator")]
         // {clientId} nurodo kad čia turi būti kažkokia reikšmė.
         [Route("remove/{clientId}")]
         [HttpGet]

@@ -12,9 +12,11 @@ namespace Application.Models
 
         public int Id { get; set; }
         public int CaseId { get; set; }
+        public int ClientId { get; set; }
         public string Contents { get; set; }
         public DateTime? CreatedAt { get; set; }
 
+        public Client Client { get; set; }
         public Case Case { get; set; }
         public ICollection<CaseAttachment> CaseAttachments { get; set; }
     }

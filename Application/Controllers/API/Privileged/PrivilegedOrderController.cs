@@ -20,7 +20,7 @@ namespace Application.Controllers.API.Privileged
     {
         public PrivilegedOrderController(BookstoreContext context, IMapper mapper) : base(context, mapper) { }
 
-        [Authorize]
+        [Authorize(Roles = "Administrator,Manager,Support,Employee")]
         [Route("get")]
         public IQueryable<OrderExpanded> FetchOrderList()
         {
@@ -50,6 +50,38 @@ namespace Application.Controllers.API.Privileged
                     }).ToList(),
                     Status = c.Status
                 });
+        }
+
+        [Authorize(Roles = "Administrator,Manager")]
+        [Route("remove/{orderId}")]
+        public void Remove(int orderId)
+        {
+            Order removing = _context
+                .Orders
+                .Include(c => c.Ordered)
+                .SingleOrDefault(c => c.Id == orderId);
+
+            if (removing != null)
+            {
+                _context.Orders.Remove(removing);
+                _context.SaveChanges();
+            }
+        }
+
+        [Authorize(Roles = "Administrator,Manager")]
+        [Route("status/{orderId}")]
+        [HttpPost]
+        public void ChangeStatus(int orderId, OrderStatus request)
+        {
+            Order changing = _context
+                .Orders
+                .SingleOrDefault(c => c.Id == orderId);
+
+            if (changing != null)
+            {
+                changing.Status = request.Status;
+                _context.SaveChanges();
+            }
         }
     }
 }

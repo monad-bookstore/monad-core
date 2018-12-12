@@ -15,6 +15,7 @@ namespace Application.Models
             PhoneNumbers = new HashSet<PhoneNumber>();
             Profiles = new HashSet<Profile>();
             Ratings = new HashSet<Rating>();
+            CaseMessageCollection = new HashSet<CaseMessage>();
         }
 
         public int Id { get; set; }
@@ -34,5 +35,6 @@ namespace Application.Models
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public ICollection<Profile> Profiles { get; set; }
         public ICollection<Rating> Ratings { get; set; }
+        public IEnumerable<CaseMessage> CaseMessageCollection { get; set; }
     }
 }

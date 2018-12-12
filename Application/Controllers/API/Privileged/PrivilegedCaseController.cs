@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,47 +11,57 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Controllers.API
+namespace Application.Controllers.API.Privileged
 {
-    [Route("api/cases")]
+    [Route("api/privileged/cases")]
     [ApiController]
-    public class CaseController : ControllerContext
+    public class PrivilegedCaseController : ControllerContext
     {
         private Client Client => GetClient();
 
-        public CaseController(BookstoreContext context, IMapper mapper) : base(context, mapper) {}
+        public PrivilegedCaseController(BookstoreContext context, IMapper mapper) : base(context, mapper)
+        {}
 
-        [Authorize]
+        [Authorize(Roles = "Administrator,Support")]
+        [Route("assign")]
+        [HttpPost]
+        public IActionResult AssignSupport(AssignCaseSupport request)
+        {
+            Case assignCase = _context
+                .Cases
+                .SingleOrDefault(c => c.Id == request.CaseId && c.SupportId == null);
+            if (assignCase != null)
+            {
+                Client consultant = _context
+                    .Clients.SingleOrDefault(c => c.Id == request.SupportId);
+
+                if (consultant == null)
+                    return BadRequest();
+
+                CaseMessage message = new CaseMessage
+                {
+                    CaseId = request.CaseId,
+                    ClientId = request.SupportId,
+                    Contents = string.Format("Sveiki, šioje byloje dalyvaus konsultantas {0}.", consultant.Username)
+                };
+
+                assignCase.CaseMessages.Add(message);
+                assignCase.SupportId = request.SupportId;
+                _context.SaveChanges();
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [Authorize(Roles = "Administrator,Support")]
         [Route("get")]
         public IQueryable<CaseExpanded> FetchCaseCollection()
         {
             return _context
                 .Cases
-                .Where(c => c.ClientId == Client.Id)
-                .Include(c => c.Support)
+                .Include(c => c.Client)
                 .ThenInclude(c => c.Profiles)
-                .Include(c => c.Order)
-                .ThenInclude(c => c.Address)
-                .Select(c => new CaseExpanded
-                {
-                    Id = c.Id,
-                    Support = ClientExpanded.Create(c.Support, c.Support.Profiles.FirstOrDefault()),
-                    Order = _mapper.Map<OrderDTO>(c.Order),
-                    Client = null,
-                    CreatedAt = c.CreatedAt,
-                    UpdatedAt = c.UpdatedAt,
-                    Status = c.Status,
-                    Title = c.Title
-                });
-        }
-
-        [Authorize]
-        [Route("get/{id}")]
-        public CaseExpanded FetchCase(int id)
-        {
-            return _context
-                .Cases
-                .Where(c => c.ClientId == Client.Id && c.Id == id)
                 .Include(c => c.CaseMessages)
                 .ThenInclude(c => c.CaseAttachments)
                 .Include(c => c.Support)
@@ -77,7 +86,46 @@ namespace Application.Controllers.API
                             Id = ctt.Id
                         }).ToList()
                     }).ToList(),
-                    Client = null,
+                    Client = ClientExpanded.Create(c.Client, c.Client.Profiles.FirstOrDefault()),
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt,
+                    Status = c.Status,
+                    Title = c.Title
+                });
+        }
+
+        [Authorize(Roles = "Administrator,Support")]
+        [Route("get/{id}")]
+        public CaseExpanded FetchCase(int id)
+        {
+            return _context
+                .Cases
+                .Where(c => c.Id == id)
+                .Include(c => c.CaseMessages)
+                .ThenInclude(c => c.CaseAttachments)
+                .Include(c => c.Client)
+                .ThenInclude(c => c.Profiles)
+                .Include(c => c.Order)
+                .ThenInclude(c => c.Address)
+                .Select(c => new CaseExpanded
+                {
+                    Id = c.Id,
+                    Support = null,
+                    Order = _mapper.Map<OrderDTO>(c.Order),
+                    Messages = c.CaseMessages.Select(ctx => new CaseMessageData
+                    {
+                        Id = ctx.Id,
+                        Contents = ctx.Contents,
+                        ClientId = ctx.ClientId,
+                        CreatedAt = ctx.CreatedAt,
+                        Attachments = ctx.CaseAttachments.Select(ctt => new CaseAttachmentDTO
+                        {
+                            AttachmentUrl = ctt.AttachmentUrl,
+                            CaseMessageId = ctx.Id,
+                            Id = ctt.Id
+                        }).ToList()
+                    }).ToList(),
+                    Client = ClientExpanded.Create(c.Client, c.Client.Profiles.FirstOrDefault()),
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt,
                     Status = c.Status,
@@ -85,71 +133,13 @@ namespace Application.Controllers.API
                 }).FirstOrDefault();
         }
 
-        [Authorize]
-        [Route("create")]
-        [HttpPost]
-        public IActionResult CreateCase(CaseExpanded request)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            Case creating = new Case
-            {
-                Title = request.Title,
-                ClientId = Client.Id,
-                OrderId = request.OrderId
-            };
-
-            CaseMessageData message = request.Messages.FirstOrDefault();
-            if (message != null)
-            {
-                CaseMessage messageTo = new CaseMessage
-                {
-                    CaseId = creating.Id,
-                    Contents = message.Contents,
-                    ClientId = Client.Id
-                };
-
-                creating.CaseMessages.Add(messageTo);
-                if (request.Attachments.Count > 0)
-                {
-                    CaseAttachmentDTO requestedAttachment = request.Attachments.FirstOrDefault();
-                    if (requestedAttachment != null)
-                    {
-                        messageTo.CaseAttachments.Add(new CaseAttachment
-                        {
-                            AttachmentUrl = requestedAttachment.AttachmentUrl,
-                            CaseMessageId = message.Id
-                        });
-                    }
-                }
-            }
-            else
-            {
-                return BadRequest(new
-                {
-                    message = "Byla privalo turėti žinutę."
-                });
-            }
-
-            _context.Cases.Add(creating);
-            _context.SaveChanges();
-            return Ok(new
-            {
-                message = "Nauja byla sukurta."
-            });
-        }
-
-
-        [Authorize]
+        [Authorize(Roles = "Administrator,Support")]
         [Route("post/{caseId}")]
         [HttpPost]
         public IActionResult WriteCaseMessage(int caseId, CaseMessageData request)
         {
             Case writingTo = _context.Cases
-                .SingleOrDefault(c => c.ClientId == Client.Id && c.Id == caseId && c.Status != 1);
+                .SingleOrDefault(c => c.Id == caseId && c.Status != 1);
 
             if (writingTo == null)
             {
@@ -195,12 +185,12 @@ namespace Application.Controllers.API
             });
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrator,Support")]
         [Route("close/{caseId}")]
         public IActionResult CloseCase(int caseId)
         {
             Case closing = _context.Cases
-                .SingleOrDefault(c => c.ClientId == Client.Id && c.Id == caseId && c.Status != 1);
+                .SingleOrDefault(c => c.Id == caseId && c.Status != 1);
 
             if (closing == null)
             {
